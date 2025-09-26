@@ -7,7 +7,7 @@ body{
 body::after{
   content: "";
   display: block;
-  min-height: "76.8125px";
+  min-height: 76.8125px;
 }
 .header{
   position: sticky;
@@ -58,6 +58,7 @@ header div{
   bottom: 0;
   width: 100%;
   text-align: center;
+  height: 76.8125px;
 }
 
 img {
@@ -66,6 +67,6 @@ img {
 }
 
 figcaption{
+  margin: 0 auto;
   text-align: center;
 }
-
