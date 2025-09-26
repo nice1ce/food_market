@@ -1,72 +1,89 @@
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset="utf-8" />
-                <title>Фуд-маркет</title>
-                <link rel="stylesheet" href="style.css">
-                <link rel="preconnect" href="https://fonts.googleapis.com">
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-            </head>
-            <!-- комментарий-->
-            <body>
-                <header class="header clearfix">
-                        <nav class="main-menu">
-                            <div><a href="">Главная</a></div>
-                            <div><a href="">Меню</a></div>
-                            <div><a href="">Акции</a></div>
-                            <div><a href="">Отзывы</a></div>
-                            <div><a href="">Корзина</a></div>
-                        </nav>
-                        <nav class="profile">
-                            <div><a href="">Войти</a></div>
-                        </nav>
-                </header>
-                <h1 class="name">Brunch your lunch</h1>
-                <p> <b>Brunch your lunch </b> предаставляет вам большый и аппетитный 
-                    выбор бизнес ланчей на любой вкус. У нас вы можете заказать доставку
-                    ваших любимых блюд для быстрого обеда, что позволяет вам не тратить время
-                    на их готовку, и позволяет вам заниматься своими делами, пока мы сделаем ваш ланч.</p>
-                
-                <p>Один из самых популярных ланчей у наших гостей состоит из салата Цезарь,
-                картофеля по деревенски вместе с жаренной курицей, а так же белого хлеба с булочкой.</p>
-                <figure class="popular_lunch">
-                    <img src="images/popular_lunch.jpg" height="384px" width="512px" alt="Салат Цезарь, картофель по-деревенски с
-                    жаренной курицей, улитка с маком и белый хлеб.">
-                    <figcaption>Любимый ланч наших гостей</figcaption>
-                </figure>
-                <table class="table" border="1" width="1000px" > <p style="margin: 0 auto;"><h2>График работы</h2></p>
-                    <thead>
-                        <tr>
-                            <th>Понедельник</th>
-                            <th>Вторник</th>
-                            <th>Среда</th>
-                            <th>Четверг</th>
-                            <th>Пятница</th>
-                            <th>Суббота</th>
-                            <th>Воскресенье</th>
-                        </tr>
-                    </thead>
+body{
+  font-family: "Work Sans", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
 
-                    <tbody align="center">
-                        <tr>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>10:00 - 18:00</td>
-                            <td>Выходной</td>
-                        </tr>
-                    </tbody>
-                </table>
+body::after{
+  content: "";
+  display: block;
+  min-height: 76.8125px;
+}
+.header{
+  position: sticky;
+  background-color: silver;
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 2;
+  letter-spacing: 1px;
+}
 
-                <footer class="footer">
-                    <p style="margin: 0;"><a href="" title="Находится в разработке">  Политиика конфиденциальности</a>
-                    <a href="" title="Будут сделаны(наверное)"> Cookies</a></p>
-                    Контактная информация: 
-                    Телефон: +7(000)000-00-00;
-                    Почта: food_market_for_you@mail.ru
-                </footer>
-            </body>
-        <html>
+.header a, footer a{
+  color:black;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-menu{
+  float: left;
+  text-decoration: none;
+}
+
+.profile{
+  float: right;
+  text-decoration: none;
+}
+
+.clearfix::after{
+  display: block;
+  clear: both;
+  content: "";
+}
+header div{
+  display: inline;
+}
+
+.name{
+    text-align: center;
+}
+
+.footer{ 
+  background-color: silver;
+  font-size: 1.2rem;
+  line-height: 2;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 76.8125px;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+figcaption{
+  margin: 0 auto;
+  text-align: center;
+}
+
+.table {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 1px solid #dddddd;
+	border-collapse: collapse; 
+}
+.table th {
+	font-weight: bold;
+	padding: 5px;
+	background: #efefef;
+	border: 1px solid #dddddd;
+}
+.table td {
+	border: 1px solid #dddddd;
+	padding: 5px;
+}
