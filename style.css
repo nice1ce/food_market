@@ -4,6 +4,11 @@ body{
   min-height: 100vh;
 }
 
+body::after{
+  content: "";
+  display: block;
+  min-height: "76.8125px";
+}
 .header{
     background-color: silver;
     margin: 0;
