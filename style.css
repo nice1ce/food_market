@@ -12,6 +12,11 @@ body{
     letter-spacing: 1px;
 }
 
+.header div{
+  margin: 0;
+  padding: 0;
+}
+
 .main-menu{
   float: left;
   text-decoration: none;
