@@ -51,12 +51,13 @@ header div{
 }
 
 .footer{ 
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   background-color: silver;
   font-size: 1.2rem;
   line-height: 2;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
 
 img {
@@ -66,5 +67,5 @@ img {
 
 figcaption{
   margin: 0 auto;
+  text-align: center;
 }
-
