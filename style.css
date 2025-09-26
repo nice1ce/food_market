@@ -12,7 +12,6 @@ body{
 }
 
 .header a{
-  display: inline;
   color:black;
   cursor: pointer;
   text-decoration: none;
@@ -30,15 +29,13 @@ body{
   text-decoration: none;
 }
 
-.main-menu:hover, .profile:hover{
-  color:grey;
-  cursor: pointer;
-}
-
 .clearfix::after{
   display: block;
   clear: both;
   content: "";
+}
+header div{
+  display: inline;
 }
 
 .name{
