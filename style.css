@@ -3,8 +3,7 @@ body{
 }
 
 .header{
-    background-color: cyan;
-    color: black;
+    background-color: silver;
     margin: 0;
     padding: 0;
     font-size: 1.25rem;
@@ -12,7 +11,11 @@ body{
     letter-spacing: 1px;
 }
 
-.header div{
+.header a{
+  display: inline;
+  color:black;
+  cursor: pointer;
+  text-decoration: none;
   margin: 0;
   padding: 0;
 }
