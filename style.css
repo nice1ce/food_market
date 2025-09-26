@@ -1,4 +1,8 @@
-header.header{
+body{
+  font-family: "Work Sans", sans-serif;
+}
+
+.header{
     margin: auto;
     font-size: 1rem;
     text-align: end;
@@ -8,11 +12,11 @@ header.header{
     padding: 20px 20px;
 }
 
-h1.name{
+.name{
     text-align: center;
 }
 
-footer.footer{
+.footer{
     font-size: 1.2rem;
     line-height: 2;
 }
