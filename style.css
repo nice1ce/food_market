@@ -12,7 +12,7 @@ body{
     letter-spacing: 1px;
 }
 
-.header a{
+.header a, footer a{
   color:black;
   cursor: pointer;
   text-decoration: none;
@@ -43,9 +43,10 @@ header div{
     text-align: center;
 }
 
-.footer{
-    font-size: 1.2rem;
-    line-height: 2;
+.footer{ 
+  background-color: silver;
+  font-size: 1.2rem;
+  line-height: 2;
 }
 
 img {
@@ -56,4 +57,3 @@ img {
 figcaption{
   margin: 0 auto;
 }
-
