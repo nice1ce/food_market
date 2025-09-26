@@ -72,7 +72,6 @@ figcaption{
 }
 
 .table {
-	width: auto;
 	margin-bottom: 20px;
 	border: 1px solid #dddddd;
 	border-collapse: collapse; 
@@ -87,3 +86,4 @@ figcaption{
 	border: 1px solid #dddddd;
 	padding: 5px;
 }
+
