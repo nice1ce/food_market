@@ -72,7 +72,7 @@ figcaption{
 }
 
 .table {
-	width: 100%;
+	width: auto;
 	margin-bottom: 20px;
 	border: 1px solid #dddddd;
 	border-collapse: collapse; 
