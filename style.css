@@ -28,11 +28,13 @@ body::after{
 }
 
 .main-menu{
+  margin: 0 10px;
   float: left;
   text-decoration: none;
 }
 
 .profile{
+  margin: 0 10px;
   float: right;
   text-decoration: none;
 }
@@ -86,4 +88,3 @@ figcaption{
 	border: 1px solid #dddddd;
 	padding: 5px;
 }
-
