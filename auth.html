@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Вход на сайт</title>
+        <link rel="stylesheet" href="auth-style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+    
+    <body> <!--action ссылка на сервер/сайт   method=> get и  post -->
+        <form class="form" action="https://httpbin.org/post" method="post">
+            <div class="log_block"> <label> <p> <h2> Введите данные для входа</h2> </p> </label>
+            <input type="text" class="login" placeholder="login" value="" maxlength="11" >
+            <p><input type="password" class="password" placeholder="password" value="" maxlength="100" ></p>
+            <p class="lable_text_check"> <label class="label_check" for="remember">Запомнить меня</label> <!-- атрибут for работает c id--> <!-- radio объеденям по name -->
+            <input type="checkbox" id="remember" class="check"> </p> 
+            <input type="submit" value="Войти" class="log"> </div>
+        </form>
+    </body>
+</html>
