@@ -25,6 +25,11 @@ body::after{
   text-decoration: none;
   margin: 0;
   padding: 0;
+
+}
+
+.main-text{
+  margin: 0 200px;
 }
 
 .main-menu{
