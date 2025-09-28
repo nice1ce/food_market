@@ -33,13 +33,13 @@ body::after{
 }
 
 .main-menu{
-  margin: 0 10px;
+  margin: 0 200px;
   float: left;
   text-decoration: none;
 }
 
 .profile{
-  margin: 0 10px;
+  margin: 0 200px;
   float: right;
   text-decoration: none;
 }
@@ -93,3 +93,5 @@ figcaption{
 	border: 1px solid #dddddd;
 	padding: 5px;
 }
+
+
