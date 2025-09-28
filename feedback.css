@@ -1,0 +1,114 @@
+body{
+  font-family: "Work Sans", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+body::after{
+  content: "";
+  display: block;
+  min-height: 76.8125px;
+}
+.header{
+  position: sticky;
+  background-color: silver;
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 2;
+  letter-spacing: 1px;
+}
+
+.header a, footer a{
+  color:black;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+
+}
+
+.main-menu{
+  margin: 0 200px;
+  float: left;
+  text-decoration: none;
+}
+.profile{
+  margin: 0 200px;
+  float: right;
+  text-decoration: none;
+}
+
+.clearfix::after{
+  display: block;
+  clear: both;
+  content: "";
+}
+
+header div{
+  display: inline;
+}
+
+.name{
+    text-align: center;
+}
+
+.footer{ 
+  background-color: silver;
+  font-size: 1.2rem;
+  line-height: 2;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 76.8125px;
+}
+
+.form{
+    margin: 8px auto;
+    border: 1px solid;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 450px;
+    height: 750px;
+}
+
+.first_lable{
+    text-align: center;
+}
+
+.text{
+    width: 410px;
+    height: 150px;
+    resize: none;
+}
+
+form p{
+    margin: 8px 20px;
+}
+
+form select{
+    margin: 8px 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+.fio{
+    width: 410px;
+}
+
+.email{
+    width: 410px;
+}
+
+.submit{
+    border-radius: 15px;
+    font-size: 1.5em;
+    background-color: limegreen;
+    width: 200px;
+    height: 50px;
+    margin: 8px 125.4px;
+}
