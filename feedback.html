@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Фуд-маркет</title>
+        <link media="print" rel="stylesheet" href="print.css">
         <link rel="stylesheet" href="feedback.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,18 +14,15 @@
         <header class="header clearfix">
             <nav class="main-menu">
                 <div><a href="index.html">Главная</a></div>
-                <div><a href="">Меню</a></div>
+                <div><a href="menu.html">Меню</a></div>
                 <div><a href="">Акции</a></div>
                 <div><a href="">Отзывы</a></div>
                 <div><a href="">Корзина</a></div>
-            </nav>
-
-            <nav class="profile">
                 <div><a href="auth.html">Войти</a></div>
             </nav>
         </header>
 
-        <form class="form" action="https://httpbin.org/post" method="post">
+        <form class="form_feedback" action="https://httpbin.org/post" method="post">
             <p class="first_lable"><h1> Напишите нам </h1></p>
 
             <p> <label for="fio">ФИО: </label></p>
@@ -53,23 +51,23 @@
             <p><textarea class="text" placeholder="Чем вам помочь?"></textarea></p>
             <!-- Найстрока textarea через атрибуты  cols="45" rows="10" -->
 
-            <p> <lable for="file"> Ваше вложение:</lable></p>
-            <p><input class= file name="file" type="file" id="file" ></p>
+            <p id="file_label"> <lable for="file"> Ваше вложение:</lable></p>
+            <p id="file_input"><input class= file name="file" type="file" id="file" ></p>
 
-            <p> <input type="checkbox" name="pers_data" id="pers_data"> 
+            <p > <input type="checkbox" name="pers_data" id="pers_data"> 
             <label for="pers_data">Даю согласие на обработку персональных данных</label> </p>
 
-            <button type="submit" class="submit"> Отправить </button>
+            <button type="submit" class="submit_but"> Отправить </button>
         </form>
         
 
         <footer class="footer">
             <p style="margin: 0;"><a href="" title="Находится в разработке">  Политиика конфиденциальности</a>
-            <a href="" title="Будут сделаны(наверное)"> Cookies</a></p>
+            <a href="" title="Будут сделаны(наверное)"> Cookies</a>
+            <a href="feedback.html" title="Напиши нам"> Обратная связь</a></p>
             Контактная информация: 
             Телефон: +7(000)000-00-00;
             Почта: food_market_for_you@mail.ru
         </footer>
     </body>
 </html>
-

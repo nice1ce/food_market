@@ -1,0 +1,222 @@
+body{
+  font-family: "Work Sans", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background-color: white;
+}
+
+body::after{
+  content: "";
+  display: block;
+  min-height: 76.8125px;
+}
+
+main{
+    margin: 0 10% 20px;
+}
+
+.header{
+  position: sticky;
+  background-color: #2a2f37;
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 2;
+  letter-spacing: 1px;
+  color:white;
+}
+
+.header a, footer a{
+  color:white;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+
+}
+
+.main-menu{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 0 15%;
+  text-decoration: none;
+}
+
+.main-menu div{
+  width: 200px;
+}
+
+.profile{
+  margin: 0 200px;
+  float: right;
+  text-decoration: none;
+}
+
+header div{
+  display: inline; 
+}
+
+.name{
+    text-align: center;
+}
+
+.footer{ 
+  background-color: #2a2f37;
+  font-size: 1.2rem;
+  line-height: 2;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 76.8125px;
+  color: white;
+}
+
+.images{
+  display: block;
+  margin: 0 auto;
+  border-radius: 35px;
+  width: 417.3px;
+  height: 285px;
+}
+
+.soup_section, .main_dish, .drink{
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+}
+
+@media (max-width: 800px){
+  .soup_section, .main_dish, .drink{
+    grid-template-columns: 1fr 1fr;
+  }
+  .soup_block, .main_dish_block, .drink_block{
+    padding: 0px 10px;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 600px){
+  .soup_section, .main_dish, .drink{
+    grid-template-columns: 1fr;
+  }
+  .soup_block, .main_dish_block, .drink_block{
+    padding: 0px 10px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  h1{
+      text-align: center;
+    }
+  a{
+      font-size: 20px;
+  }
+  h2{
+    text-align: center;
+  }
+}
+
+
+
+.soup_block, .main_dish_block, .drink_block{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding: 30px 40px;
+  border-radius: 35px;
+  cursor: pointer;
+  background-color: white;
+  border: 2px solid white;
+  width: 417.3px;
+  height: 440px;
+  box-shadow: 20px 23px 53px rgba(0, 0, 0, 0.13);
+}
+
+.soup_block.soup_block:hover, .main_dish_block:hover, .drink_block:hover{
+  border: 2px solid black;
+  .add_buttom{
+    background-color:limegreen;
+    color: black;
+    border: 1px solid black;
+  }
+}
+.name, .weight, .price{
+    text-align: left;
+    margin: 5px 0px;
+}
+.name, .price{
+    font-size: 1.2em;
+}
+
+.name{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.weight{
+    color:gray;
+}
+
+.add_buttom{
+    cursor: pointer;
+    border: 0px ;
+    background-color: #f1eee9;
+    border-radius: 10px;
+    height: 50px;
+    width: 417.3px;
+    margin: 10px auto 0px   ;
+    padding: 10px 30px;
+}
+
+.form_menu{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  width: 900px;
+  height: 750px;
+  border: 1px solid black;
+  border-radius: 50px;
+  margin: 10px auto;
+  padding: 50px;
+  font-weight: 500;
+}
+
+.form_select{
+  width: 300px;
+  height: 30px;
+}
+
+.order_comment{
+  width: 300px;
+  height: 125px;
+  resize: none;
+}
+
+.name_text, .email_but, .phone_but, .address, .deliv_time{
+  width: 300px;
+  height: 30px;
+}
+
+.name{
+  height: 23px;
+}
+
+#add{
+  margin: 10px 0;
+}
+
+.last_buttoms{
+  width: 100px;
+  height: 30px;
+  margin: 10px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.form p{
+  margin: 10px 0;
+}

@@ -11,7 +11,7 @@ body::after{
 }
 .header{
   position: sticky;
-  background-color: silver;
+  background-color: #2a2f37;
   margin: 0;
   padding: 0;
   font-size: 1.25rem;
@@ -20,7 +20,7 @@ body::after{
 }
 
 .header a, footer a{
-  color:black;
+  color:white;
   cursor: pointer;
   text-decoration: none;
   margin: 0;
@@ -33,9 +33,16 @@ body::after{
 }
 
 .main-menu{
-  margin: 0 200px;
-  float: left;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 0 15%;
   text-decoration: none;
+}
+
+.main-menu div{
+  width: 200px;
 }
 
 .profile{
@@ -58,7 +65,7 @@ header div{
 }
 
 .footer{ 
-  background-color: silver;
+  background-color: #2a2f37;
   font-size: 1.2rem;
   line-height: 2;
   position: fixed;
@@ -66,6 +73,7 @@ header div{
   width: 100%;
   text-align: center;
   height: 76.8125px;
+  color: white;
 }
 
 img {
