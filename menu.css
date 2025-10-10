@@ -36,6 +36,7 @@ main{
 }
 
 .main-menu{
+  text-align: center;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -56,10 +57,6 @@ main{
 
 header div{
   display: inline; 
-}
-
-.name{
-    text-align: center;
 }
 
 .footer{ 
@@ -93,16 +90,27 @@ header div{
   .soup_section, .main_dish, .drink{
     grid-template-columns: 1fr 1fr;
   }
-  .soup_block, .main_dish_block, .drink_block{
-    padding: 0px 10px;
+  .nav{
+    padding: 0;
+    margin: 0;
     justify-content: space-between;
   }
 }
 @media (max-width: 600px){
+  .main-menu{
+    flex-flow: column nowrap;
+    align-items: center;
+    text-align: center;
+    a{
+      font-size: 20px;
+    }
+  }
   .soup_section, .main_dish, .drink{
     grid-template-columns: 1fr;
+    justify-content: center;
   }
   .soup_block, .main_dish_block, .drink_block{
+    grid-template-rows: 1fr 1fr 1fr;
     padding: 0px 10px;
     justify-content: space-between;
     align-items: center;
@@ -110,9 +118,6 @@ header div{
   h1{
       text-align: center;
     }
-  a{
-      font-size: 20px;
-  }
   h2{
     text-align: center;
   }
@@ -124,6 +129,7 @@ header div{
   display: flex;
   flex-direction: column;
   align-content: center;
+  margin: 0 auto;
   padding: 30px 40px;
   border-radius: 35px;
   cursor: pointer;
