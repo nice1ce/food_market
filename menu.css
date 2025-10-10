@@ -86,45 +86,6 @@ header div{
   justify-content: center;
 }
 
-@media (max-width: 800px){
-  .soup_section, .main_dish, .drink{
-    grid-template-columns: 1fr 1fr;
-  }
-  .nav{
-    padding: 0;
-    margin: 0;
-    justify-content: space-between;
-  }
-}
-@media (max-width: 600px){
-  .main-menu{
-    flex-flow: column nowrap;
-    align-items: center;
-    text-align: center;
-    a{
-      font-size: 20px;
-    }
-  }
-  .soup_section, .main_dish, .drink{
-    grid-template-columns: 1fr;
-    justify-content: center;
-  }
-  .soup_block, .main_dish_block, .drink_block{
-    grid-template-rows: 1fr 1fr 1fr;
-    padding: 0px 10px;
-    justify-content: space-between;
-    align-items: center;
-  }
-  h1{
-      text-align: center;
-    }
-  h2{
-    text-align: center;
-  }
-}
-
-
-
 .soup_block, .main_dish_block, .drink_block{
   display: flex;
   flex-direction: column;
@@ -226,3 +187,72 @@ header div{
 .form p{
   margin: 10px 0;
 }
+
+
+@media (max-width: 800px){
+  main{
+    margin: 0 5%;
+  }
+  .nav{
+    padding: 0;
+    margin: 0;
+    justify-content: space-between;
+  }
+  .soup_section, .main_dish, .drink{
+    grid-template-columns: 1fr 1fr;
+  }
+  .soup_block, .main_dish_block, .drink_block {
+    margin: 0 auto;
+    padding: 30px 40px;
+    width: 280px;
+    height: auto;
+  }
+  .images, .add_buttom{
+    width: 90%;
+  }
+  .form_menu{
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 70%;
+    height: auto;
+    margin: 10px auto;
+    padding: 50px;
+    font-weight: 500;
+  }
+  .first_column, .second_column{
+    text-align: center;
+  }
+}
+@media (max-width: 600px){
+  .main-menu{
+    flex-flow: column nowrap;
+    align-items: center;
+    text-align: center;
+    a{
+      font-size: 20px;
+    }
+  }
+  .images, .add_buttom{
+    width: 50%;
+  }
+  .soup_section, .main_dish, .drink{
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+  .soup_block, .main_dish_block, .drink_block{
+    font-size: 19px;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding: 10px 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: auto;
+  }
+  h1{
+      text-align: center;
+    }
+  h2{
+    text-align: center;
+  }
+}
+

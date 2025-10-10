@@ -29,7 +29,7 @@ body::after{
 }
 
 .main-text{
-  margin: 0 200px;
+  margin: 0 15%;
 }
 
 .main-menu{
@@ -87,6 +87,7 @@ figcaption{
 }
 
 .table {
+  margin: 0 15%;
 	margin-bottom: 20px;
 	border: 1px solid #dddddd;
 	border-collapse: collapse; 
@@ -101,11 +102,18 @@ figcaption{
 	border: 1px solid #dddddd;
 	padding: 5px;
 }
-
+h2{
+  margin: 10px 15%;
+}
 
 @media (max-width: 800px){
   .main-text{
-    width: 500px;
+    width: 90%;
+    text-align: justify;
+    margin: 0 5%;
+  }
+  .main-text, figcaption, h2{
+    font-size: 20px;
   }
   .nav{
     padding: 0;
@@ -114,9 +122,16 @@ figcaption{
   }
 }
 @media (max-width: 600px){
-  
+  .main-text{
+    width: 90%;
+    text-align: justify;
+    margin: 0 5%;
+  }
   h1{
     text-align: center;
+  }
+  .main-text, figcaption, h2{
+    font-size: 35px;
   }
   .main-menu{
     flex-flow: column nowrap;
@@ -130,11 +145,21 @@ figcaption{
     width: 100%;
   }
   .table{
-    font-size: 14px;
+    font-size: 20px;
+    width: 95;
+    margin: 0 5%;
+  }
+  h2{
+    margin: 5px 5%;
   }
 }
 
 @media (max-width: 400px){
+  .main-text{
+    width: 90%;
+    text-align: justify;
+    margin: 0 5%;
+  }
   h1{
     text-align: center;
   }
@@ -146,10 +171,18 @@ figcaption{
       font-size: 20px;
     }
   }
+  .main-text, figcaption, h2{
+    font-size: 40px;
+  }
   img {
     width: 100%;
   }
   .table{
-    font-size: 8px;
+    font-size: 25px;
+    width: 90%;
+    margin: 0 5%;
+  }
+  h2{
+    margin: 0 5%;
   }
 }
