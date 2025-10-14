@@ -107,6 +107,9 @@ h2{
 }
 
 @media (max-width: 800px){
+  h1{
+    font-size: 40px;
+  }
   .main-text{
     width: 90%;
     text-align: justify;
@@ -155,22 +158,6 @@ h2{
 }
 
 @media (max-width: 400px){
-  .main-text{
-    width: 90%;
-    text-align: justify;
-    margin: 0 5%;
-  }
-  h1{
-    text-align: center;
-  }
-  .main-menu{
-    flex-flow: column nowrap;
-    align-items: center;
-    text-align: center;
-    a{
-      font-size: 20px;
-    }
-  }
   .main-text, figcaption, h2{
     font-size: 40px;
   }
