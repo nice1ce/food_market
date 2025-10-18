@@ -75,7 +75,7 @@ header div{
   display: block;
   margin: 0 auto;
   border-radius: 35px;
-  width: 417.3px;
+  width: 317.3px;
   height: 285px;
 }
 
@@ -96,7 +96,7 @@ header div{
   cursor: pointer;
   background-color: white;
   border: 2px solid white;
-  width: 417.3px;
+  width: 317.3px;
   height: 440px;
   box-shadow: 20px 23px 53px rgba(0, 0, 0, 0.13);
 }
@@ -133,7 +133,7 @@ header div{
     background-color: #f1eee9;
     border-radius: 10px;
     height: 50px;
-    width: 417.3px;
+    width: 317.3px;
     margin: 10px auto 0px   ;
     padding: 10px 30px;
 }
