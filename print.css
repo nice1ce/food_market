@@ -52,7 +52,7 @@
 	}
 	/*Для формы меню*/
 	.form_menu{
-		margin: 0 -2cm !important;
+		margin: auto !important;
 		grid-template-columns: 8cm !important;
 		height: 28cm !important;
 		justify-content: center !important;
