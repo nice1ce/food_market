@@ -3,8 +3,7 @@
     	display: none !important;
    	}
     @page {
- 	margin: 10mm 10mm 10mm 20mm;
-	size: auto
+ 	 margin: 10mm 10mm 10mm 20mm;
    	}
    	*, *:before, *:after { 
  		color: #000;
@@ -14,9 +13,6 @@
  	html, body {
 		font-size: 15px;
 		margin: 0 !important;
-		padding: 0 !important;
-        height: auto !important;
-        min-height: auto !important;
 	}
 	h1 {
 		font-size: 24px;
@@ -30,29 +26,25 @@
 
 	/*Для страницы меню*/
 	.soup_section, .main_dish, .drink{
-		margin: 0 !important;	
+		margin: 0 !important;
 		page-break-after: always;
-		display: grid !important;
-		grid-template-columns: 18cm !important;
-		height: auto !important;
-        min-height: 0 !important;
-  		justify-content: center !important;
+		display: grid;
+		grid-template-columns: 18cm;
+		height: 9cm;
+  		justify-content: center;
 		.add_buttom{
     		display: none !important;
 	   	}
 	}
 	.soup_block, .main_dish_block, .drink_block{
-		height: 10cm !important;
-        min-height: 0 !important;
-        width: 100% !important;
-		width: 10cm !important;
+		height: 11cm !important;
+		width: 100% !important;
 		border: 1px solid black !important;
 		box-shadow:none !important;
-        page-break-inside: avoid;
 	}
 	/*Для формы меню*/
 	.form_menu{
-		margin: auto !important;
+		margin: 0 -2cm !important;
 		grid-template-columns: 8cm !important;
 		height: 28cm !important;
 		justify-content: center !important;
@@ -60,7 +52,7 @@
 	}
 
 	#form_buttoms{
-		display: none;
+		visibility: hidden;
 	}
 	::placeholder{
 		visibility:hidden;
@@ -81,31 +73,5 @@
 	.form_feedback{
 		box-shadow:none !important;
 		height: 16cm !important;
-        min-height: 0 !important;
 	}
-
-	.clearfix::after {
-        display: none !important;
-    }
-    
-    body::after {
-        display: none !important;
-        content: none !important;
-        height: 0 !important;
-        min-height: 0 !important;
-    }
-
-    figure, img, table {
-        page-break-inside: avoid;
-    }
-    
-    h1, h2, h3 {
-        page-break-after: avoid;
-    }
-    
-    * {
-        max-height: none !important;
-        height: auto !important;
-    }
-
 }
