@@ -75,7 +75,7 @@ header div{
   display: block;
   margin: 0 auto;
   border-radius: 35px;
-  width: 317.3px;
+  width: 417.3px;
   height: 285px;
 }
 
@@ -96,7 +96,7 @@ header div{
   cursor: pointer;
   background-color: white;
   border: 2px solid white;
-  width: 317.3px;
+  width: 417.3px;
   height: 440px;
   box-shadow: 20px 23px 53px rgba(0, 0, 0, 0.13);
 }
@@ -133,7 +133,7 @@ header div{
     background-color: #f1eee9;
     border-radius: 10px;
     height: 50px;
-    width: 317.3px;
+    width: 417.3px;
     margin: 10px auto 0px   ;
     padding: 10px 30px;
 }
@@ -256,3 +256,19 @@ header div{
   }
 }
 
+.soup_block.selected, 
+.main_dish_block.selected, 
+.drink_block.selected {
+    border: 2px solid black !important;
+}
+
+.total-price {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+}

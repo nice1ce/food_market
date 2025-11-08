@@ -111,30 +111,30 @@
                 <div class="first_column">
                     <p style="font-size: 1.2em;"> Ваш заказ</p>
                     
-                    <label for="soup_select"> <p> Суп </p> </label>
-                    <select  id="soup_select" class="form_select"> 
-                        <option disabled selected> Выберите суп </option>
-                        <option> Борщ </option>
-                        <option> Солянка </option>
-                        <option> Харчо </option>
+                    <label for="soup_select"><p>Суп</p></label>
+                    <select id="soup_select" class="form_select" disabled>
+                        <option disabled selected>Выберите суп</option>
+                        <option>Борщ</option>
+                        <option>Солянка</option>
+                        <option>Харчо</option>
                     </select>
 
-                    <label for="main_dish_select"> <p>Главное блюдо </p> </label>
-                        <select id="main_dish_select" class="form_select">
-                            <option disabled selected> Выберите главное блюдо</option>
-                            <option> Жаренный картофель с грибами</option>
-                            <option> Макароны по-флостки</option>
-                            <option> Рис с курицей терияки</option>
-                        </select>
+                    <label for="main_dish_select"><p>Главное блюдо</p></label>
+                    <select id="main_dish_select" class="form_select" disabled>
+                        <option disabled selected>Выберите главное блюдо</option>
+                        <option>Жаренный картофель с грибами</option>
+                        <option>Макароны по-флотски</option>
+                        <option>Рис с курицей терияки</option>
+                    </select>
 
-                    <label for="drink_select"> <p>Напиток</p> </lable> 
-                        <select id="drink_select" class="form_select">
-                            <option disabled selected> Выберите ваш напиток</option>
-                            <option> Ягодный морс </option>
-                            <option> Апельсиновый сок</option>
-                            <option> Яблочный сок</option>
-                        </select>
-                        
+                    <label for="drink_select"><p>Напиток</p></label>
+                    <select id="drink_select" class="form_select" disabled>
+                        <option disabled selected>Выберите ваш напиток</option>
+                        <option>Ягодный морс</option>
+                        <option>Апельсиновый сок</option>
+                        <option>Яблочный сок</option>
+                    </select>
+
                     <label for="order_comment"> <p> Комментарий к заказу</p></label>
                     <textarea placeholder="Заезд во двор задней части дома, домофон 383, этаж 10" class="order_comment" id="order_comment"></textarea>
                 </div>
@@ -186,5 +186,11 @@
             Телефон: +7(000)000-00-00;
             Почта: food_market_for_you@mail.ru
         </footer>
+
+
+        <script src="dishes.js"></script>
+        <script src="displayDishes.js"></script>
+        <script src="orderManager.js"></script>
+
     </body>
 </html>
