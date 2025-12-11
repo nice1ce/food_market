@@ -1,4 +1,7 @@
 // orderManager.js
+
+const ORDER_STORAGE_KEY = 'orderDishes';
+
 let currentOrder = {
     soup: null,
     main_dish: null,
@@ -12,6 +15,7 @@ window.addDishToOrder = function(dish) {
     currentOrder[dish.category] = dish;
     updateOrderDisplay();
     updateOrderForm();
+    saveOrderToStorage();
 };
 
 window.updateOrderDisplay = function() {
@@ -72,7 +76,6 @@ function updateFormSelect(selectId, dish) {
     const select = document.getElementById(selectId);
     if (select) {
         if (dish) {
-            // Находим опцию с соответствующим названием блюда
             for (let option of select.options) {
                 if (option.text === dish.name) {
                     option.selected = true;
@@ -133,6 +136,63 @@ function getCategoryClass(category) {
     return classMap[category] || '';
 }
 
+// ---------- localStorage ----------
+
+function saveOrderToStorage() {
+    const data = {};
+    Object.entries(currentOrder).forEach(([category, dish]) => {
+        data[category] = dish ? dish.keyword : null;
+    });
+    try {
+        localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+        console.error('Не удалось сохранить заказ в localStorage', e);
+    }
+}
+
+function loadOrderFromStorage() {
+    try {
+        const raw = localStorage.getItem(ORDER_STORAGE_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+    } catch (e) {
+        console.error('Не удалось прочитать заказ из localStorage', e);
+        return null;
+    }
+}
+
+function restoreOrderFromStorage() {
+    const stored = loadOrderFromStorage();
+    if (!stored || !Array.isArray(window.dishes)) return;
+
+    currentOrder = {
+        soup: null,
+        main_dish: null,
+        drink: null,
+        starter: null,
+        dessert: null
+    };
+
+    Object.entries(stored).forEach(([category, keyword]) => {
+        if (!keyword) return;
+        const dish = window.dishes.find(
+            d => d.category === category && d.keyword === keyword
+        );
+        if (dish) {
+            currentOrder[category] = dish;
+        }
+    });
+
+    updateOrderDisplay();
+    updateOrderForm();
+}
+
+// При первом открытии страницы — только нарисовать пустую "стоимость"
 document.addEventListener('DOMContentLoaded', function() {
     updateTotalPrice();
+});
+
+// После загрузки блюд восстановим сохранённый выбор
+document.addEventListener('dishesLoaded', function() {
+    restoreOrderFromStorage();
 });

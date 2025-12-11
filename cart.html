@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Фуд-маркет — Оформить заказ</title>
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="combos.css">
+    <link rel="stylesheet" href="cart.css">
+    <link media="print" rel="stylesheet" href="print.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="header clearfix">
+    <nav class="main-menu">
+        <div><a href="index.html">Главная</a></div>
+        <div><a href="menu.html">Меню</a></div>
+        <div><a href="combo.html">Комбо-ланчи</a></div>
+        <div><a href="custom-combo.html">Собрать ланч</a></div>
+        <div><a href="cart.html" class="active">Оформить заказ</a></div>
+        <div><a href="">Отзывы</a></div>
+        <div><a href="auth.html">Войти</a></div>
+    </nav>
+</header>
+
+<main class="cart-page">
+    <!-- ОДИН общий блок с двумя колонками: слева состав заказа, справа данные -->
+    <section class="cart-form-section">
+        <h1>Оформление заказа</h1>
+
+        <div class="cart-form-wrapper">
+            <!-- Левая колонка: состав заказа -->
+            <div class="cart-items-column">
+                <h2>Состав заказа</h2>
+                <div id="cart-items" class="cart-items-grid"></div>
+
+                <p id="cart-empty" class="cart-empty-message" style="display: none;">
+                    Ничего не выбрано. Чтобы добавить блюда в заказ, перейдите на страницу
+                    <a href="menu.html">Меню</a> или <a href="custom-combo.html">Собрать ланч</a>.
+                </p>
+            </div>
+
+            <!-- Правая колонка — ваши данные + стоимость + комментарий -->
+            <form id="order-form" class="form_menu">
+                <div class="second_column">
+                    <p style="font-size: 1.2em;">Ваши данные</p>
+
+                    <label for="name_text"><p>Имя</p></label>
+                    <textarea placeholder="Иван" class="name_text texta" id="name_text"
+                              style="resize: none; font-size: 1.4em;"></textarea>
+
+                    <label for="email_but"><p>Email</p></label>
+                    <input type="email" placeholder="example@mail.ru" class="email_but" id="email_but">
+
+                    <p>
+                        <input type="checkbox" id="subscribe">
+                        <label for="subscribe">Получать информацию об акциях и скидках</label>
+                    </p>
+
+                    <label for="phone_but"><p>Номер телефона</p></label>
+                    <input type="tel" id="phone_but" class="phone_but" placeholder="+7(000)000-00-00">
+
+                    <label for="address"><p>Адрес</p></label>
+                    <input type="text" id="address" class="address"
+                           placeholder="Тверская улица, дом 34, кв. 153, подъезд 2">
+                    <p style="font-style: italic;">Доставка осуществляется только по Москве</p>
+
+                    <p>Время доставки:</p>
+                    <p><input type="radio" name="time_choice" id="fast" value="now" checked>
+                    <label for="fast">Как можно скорее</label></p>
+                    
+                    <p><input type="radio" name="time_choice" id="exact_time" value="by_time">
+                    <label for="exact_time">В указанное время</label></p>
+
+                    <label for="deliv_time">Укажите время доставки</label>
+                    <p><input type="time" id="deliv_time" class="deliv_time"></p>
+
+                    <p style="font-style: italic;">Доступное время доставки с 7:00 до 23:00</p>
+
+                    <!-- Стоимость заказа внутри "Ваши данные" -->
+                    <p style="margin-top: 15px; font-weight: 600;">
+                        Стоимость заказа: <span id="summary-total">0₽</span>
+                    </p>
+
+                    <!-- Комментарий к заказу тоже здесь -->
+                    <label for="order_comment"><p>Комментарий к заказу</p></label>
+                    <textarea placeholder="Заезд во двор задней части дома, домофон 383, этаж 10"
+                              class="order_comment"
+                              id="order_comment"></textarea>
+
+                    <span id="form_buttoms">
+                        <input type="reset" value="Сбросить" class="last_buttoms">
+                        <input type="submit" value="Отправить" class="last_buttoms" id="submit-order">
+                    </span>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p style="margin: 0;"><a href="" title="Находится в разработке">Политика конфиденциальности</a>
+    <a href="" title="Будут сделаны(наверное)">Cookies</a>
+    <a href="feedback.html" title="Напиши нам">Обратная связь</a></p>
+    Контактная информация: 
+    Телефон: +7(000)000-00-00;
+    Почта: food_market_for_you@mail.ru
+</footer>
+
+<!-- окно уведомлений, как на menu.html -->
+<div id="notification" class="notification-overlay" style="display: none;">
+    <div class="notification-window">
+        <p id="notification-text">Текст уведомления</p>
+        <button class="notification-btn" id="notification-ok">Окей</button>
+    </div>
+</div>
+
+<script src="dishes.js"></script>
+<script src="combos.js"></script>
+<script src="orderValidator.js"></script>
+<script src="cart.js"></script>
+</body>
+</html>

@@ -151,19 +151,6 @@ header div{
     font-size: 1em;
 }
 
-.form_menu{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: space-between;
-  width: 900px;
-  height: 750px;
-  border: 1px solid black;
-  border-radius: 50px;
-  margin: 10px auto;
-  padding: 50px;
-  font-weight: 500;
-}
-
 .form_select{
   width: 300px;
   height: 30px;
@@ -220,15 +207,7 @@ header div{
   .images, .add_buttom{
     width: 90%;
   }
-  .form_menu{
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 70%;
-    height: auto;
-    margin: 10px auto;
-    padding: 50px;
-    font-weight: 500;
-  }
+  
   .first_column, .second_column{
     text-align: center;
   }
