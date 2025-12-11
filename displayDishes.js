@@ -1,37 +1,9 @@
 // displayDishes.js
-async function initializeMenu() {
-    try {
-        // Ждем загрузку блюд если их еще нет
-        if (!window.dishes || window.dishes.length === 0) {
-            if (typeof loadDishes === 'function') {
-                console.log('Waiting for dishes to load...');
-                await loadDishes();
-            } else {
-                console.error('loadDishes function not found');
-                return;
-            }
-        }
-        
-        console.log('Initializing menu with', window.dishes.length, 'dishes');
-        
-        // Инициализируем фильтры и отображаем блюда
-        initializeFilters();
-        displayAllDishes();
-        
-    } catch (error) {
-        console.error('Error in initializeMenu:', error);
-        showErrorMessage();
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    initializeFilters();
+    displayAllDishes();
+});
 
-function showErrorMessage() {
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.innerHTML = '<p style="text-align: center; color: #ff6b6b;">Ошибка загрузки меню. Пожалуйста, обновите страницу.</p>';
-    });
-}
-
-// Остальной код остается таким же...
 function initializeFilters() {
     const filterConfig = {
         soup: [
@@ -120,13 +92,13 @@ function handleFilterClick(button, category, kind) {
 }
 
 function showAllDishesInCategory(category) {
-    const dishesInCategory = window.dishes.filter(dish => dish.category === category)
+    const dishesInCategory = dishes.filter(dish => dish.category === category)
                                    .sort((a, b) => a.name.localeCompare(b.name));
     displayCategoryDishes(category, dishesInCategory, `.${category}_section`);
 }
 
 function filterDishesByKind(category, kind) {
-    const filteredDishes = window.dishes.filter(dish => dish.category === category && dish.kind === kind)
+    const filteredDishes = dishes.filter(dish => dish.category === category && dish.kind === kind)
                                 .sort((a, b) => a.name.localeCompare(b.name));
     displayCategoryDishes(category, filteredDishes, `.${category}_section`);
 }
@@ -144,7 +116,7 @@ function displayCategoryDishes(category, dishesToDisplay, selector) {
     
     section.innerHTML = '';
     
-    if (!dishesToDisplay || dishesToDisplay.length === 0) {
+    if (dishesToDisplay.length === 0) {
         const noDishesMessage = document.createElement('p');
         noDishesMessage.textContent = 'Блюда не найдены';
         noDishesMessage.style.cssText = `
@@ -213,9 +185,3 @@ function updateCategoryDisplay(category, sectionClass) {
         window.updateCategoryDisplay(category, sectionClass);
     }
 }
-
-// Инициализируем при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing menu...');
-    initializeMenu();
-});
