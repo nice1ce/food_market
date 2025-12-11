@@ -163,29 +163,46 @@
             </div>
         </div>
 
-        <!-- Загрузка dishes через API -->
+        <!-- Загрузка dishes через функцию loadDishes -->
+        <script src="dishes.js"></script>
         <script>
-            fetch('https://raw.githubusercontent.com/nice1ce/food_market/main/dishes.json')
-                .then(response => response.json())
-                .then(data => {
-                    window.dishes = data;
-                    // Загружаем скрипты, которые зависят от dishes
-                    const scripts = ['displayDishes.js', 'orderManager.js', 'orderValidator.js'];
-                    scripts.forEach(script => {
-                        const scriptElement = document.createElement('script');
-                        scriptElement.src = script;
-                        document.body.appendChild(scriptElement);
+            // Загружаем блюда и инициализируем приложение
+            async function initMenu() {
+                try {
+                    // Показываем индикатор загрузки
+                    document.querySelectorAll('h2').forEach(h2 => {
+                        h2.innerHTML += ' <span style="color: #666; font-size: 0.8em;">(загрузка...)</span>';
                     });
-                })
-                .catch(error => {
-                    console.error('Error loading dishes:', error);
-                    // Загружаем комбо даже если dishes не загрузились
-                    const scriptElement = document.createElement('script');
-                    scriptElement.src = 'combos.js';
-                    document.body.appendChild(scriptElement);
-                });
+                    
+                    // Загружаем блюда
+                    await loadDishes();
+                    
+                    // Загружаем остальные скрипты
+                    const scripts = ['combos.js', 'displayDishes.js', 'orderManager.js', 'orderValidator.js'];
+                    
+                    for (const script of scripts) {
+                        await new Promise((resolve, reject) => {
+                            const scriptElement = document.createElement('script');
+                            scriptElement.src = script;
+                            scriptElement.onload = resolve;
+                            scriptElement.onerror = reject;
+                            document.body.appendChild(scriptElement);
+                        });
+                    }
+                    
+                    // Убираем индикатор загрузки
+                    document.querySelectorAll('h2').forEach(h2 => {
+                        h2.innerHTML = h2.innerHTML.replace(' <span style="color: #666; font-size: 0.8em;">(загрузка...)</span>', '');
+                    });
+                    
+                } catch (error) {
+                    console.error('Error initializing menu:', error);
+                    alert('Ошибка загрузки меню. Пожалуйста, обновите страницу.');
+                }
+            }
+            
+            // Запускаем инициализацию
+            document.addEventListener('DOMContentLoaded', initMenu);
         </script>
-        
-        <script src="combos.js"></script>
     </body>
 </html>

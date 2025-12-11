@@ -25,7 +25,7 @@
     
     <main>
         <section class="custom-combo-section">
-            <h1>Собери свой идеальный ланч</h1>
+            <h1>Собери свой идеальный ланч <span id="loading-indicator" style="color: #666; font-size: 0.8em;">(загрузка...)</span></h1>
             <p>Выберите до 5 блюд и получите скидку 25% на весь заказ!</p>
             
             <div class="custom-combo-container">
@@ -39,7 +39,9 @@
                             <button class="filter-btn" data-category="soup" data-kind="meat">Мясные</button>
                             <button class="filter-btn" data-category="soup" data-kind="veg">Вегетарианские</button>
                         </div>
-                        <div class="dishes-grid" id="soup-grid"></div>
+                        <div class="dishes-grid" id="soup-grid">
+                            <p class="loading-message">Загрузка супов...</p>
+                        </div>
                     </section>
                     
                     <!-- Выбор стартера -->
@@ -51,7 +53,9 @@
                             <button class="filter-btn" data-category="starter" data-kind="meat">Мясные</button>
                             <button class="filter-btn" data-category="starter" data-kind="veg">Вегетарианские</button>
                         </div>
-                        <div class="dishes-grid" id="starter-grid"></div>
+                        <div class="dishes-grid" id="starter-grid">
+                            <p class="loading-message">Загрузка стартеров...</p>
+                        </div>
                     </section>
                     
                     <!-- Выбор основного блюда -->
@@ -63,7 +67,9 @@
                             <button class="filter-btn" data-category="main_dish" data-kind="meat">Мясные</button>
                             <button class="filter-btn" data-category="main_dish" data-kind="veg">Вегетарианские</button>
                         </div>
-                        <div class="dishes-grid" id="main-grid"></div>
+                        <div class="dishes-grid" id="main-grid">
+                            <p class="loading-message">Загрузка основных блюд...</p>
+                        </div>
                     </section>
                     
                     <!-- Выбор напитка -->
@@ -74,7 +80,9 @@
                             <button class="filter-btn" data-category="drink" data-kind="cold">Холодные</button>
                             <button class="filter-btn" data-category="drink" data-kind="hot">Горячие</button>
                         </div>
-                        <div class="dishes-grid" id="drink-grid"></div>
+                        <div class="dishes-grid" id="drink-grid">
+                            <p class="loading-message">Загрузка напитков...</p>
+                        </div>
                     </section>
                     
                     <!-- Выбор десерта -->
@@ -86,14 +94,16 @@
                             <button class="filter-btn" data-category="dessert" data-kind="medium">Средние</button>
                             <button class="filter-btn" data-category="dessert" data-kind="large">Большие</button>
                         </div>
-                        <div class="dishes-grid" id="dessert-grid"></div>
+                        <div class="dishes-grid" id="dessert-grid">
+                            <p class="loading-message">Загрузка десертов...</p>
+                        </div>
                     </section>
                 </div>
                 
                 <div class="combo-summary">
                     <h3>Ваш ланч</h3>
                     <div class="summary-list" id="summary-list">
-                        <p class="empty-message">Выберите блюда из категорий слева</p>
+                        <p class="empty-message">Загрузка меню...</p>
                     </div>
                     <div class="price-summary">
                         <div class="price-row">
@@ -109,7 +119,7 @@
                             <span id="total-price">0₽</span>
                         </div>
                     </div>
-                    <button class="add-to-cart-btn" id="add-to-cart">Добавить в корзину</button>
+                    <button class="add-to-cart-btn" id="add-to-cart" disabled>Добавить в корзину</button>
                     <p class="combo-hint">💡 Выберите по одному блюду из каждой категории для полного ланча</p>
                 </div>
             </div>
@@ -133,21 +143,55 @@
         </div>
     </div>
     
-    <!-- Загрузка dishes через API -->
+    <!-- Загрузка dishes через функцию loadDishes -->
+    <script src="dishes.js"></script>
     <script>
-        fetch('https://raw.githubusercontent.com/nice1ce/food_market/main/dishes.json')
-            .then(response => response.json())
-            .then(data => {
-                window.dishes = data;
-                // Загружаем customCombo.js после загрузки dishes
-                const script = document.createElement('script');
-                script.src = 'customCombo.js';
-                document.body.appendChild(script);
-            })
-            .catch(error => {
-                console.error('Error loading dishes:', error);
-                alert('Ошибка загрузки меню. Пожалуйста, обновите страницу.');
-            });
+        // Загружаем блюда и инициализируем сборку комбо
+        async function initCustomCombo() {
+            try {
+                // Загружаем блюда
+                const loadedDishes = await loadDishes();
+                
+                // Проверяем, что блюда загружены
+                if (!loadedDishes || loadedDishes.length === 0) {
+                    throw new Error('No dishes loaded');
+                }
+                
+                // Загружаем customCombo.js
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'customCombo.js';
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.body.appendChild(script);
+                });
+                
+                // Убираем индикатор загрузки
+                document.getElementById('loading-indicator').style.display = 'none';
+                
+                // Обновляем сообщения загрузки
+                document.querySelectorAll('.loading-message').forEach(el => {
+                    el.textContent = 'Выберите блюдо';
+                });
+                
+                console.log('Custom combo initialized with', loadedDishes.length, 'dishes');
+                
+            } catch (error) {
+                console.error('Error initializing custom combo:', error);
+                document.getElementById('loading-indicator').textContent = '(ошибка загрузки)';
+                
+                // Показываем сообщение об ошибке
+                document.querySelectorAll('.loading-message').forEach(el => {
+                    el.textContent = 'Ошибка загрузки меню';
+                    el.style.color = '#ff6b6b';
+                });
+                
+                document.querySelector('.empty-message').textContent = 'Ошибка загрузки меню. Пожалуйста, обновите страницу.';
+            }
+        }
+        
+        // Запускаем инициализацию
+        document.addEventListener('DOMContentLoaded', initCustomCombo);
     </script>
 </body>
 </html>

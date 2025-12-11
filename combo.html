@@ -24,11 +24,11 @@
     
     <main>
         <section class="combo-section">
-            <h1>Готовые комбо-ланчи</h1>
+            <h1>Готовые комбо-ланчи <span id="loading-indicator" style="color: #666; font-size: 0.8em;">(загрузка...)</span></h1>
             <p>Выберите один из наших популярных наборов со скидкой до 30%!</p>
             
             <div class="combo-grid" id="combo-grid">
-                <!-- Комбо будут загружены через JavaScript -->
+                <p class="loading-message">Загрузка комбо-ланчей...</p>
             </div>
             
             <div class="combo-dessert-info">
@@ -46,26 +46,45 @@
         Почта: food_market_for_you@mail.ru
     </footer>
     
-    <!-- Загрузка dishes через API -->
+    <!-- Загрузка dishes через функцию loadDishes -->
+    <script src="dishes.js"></script>
     <script>
-        fetch('https://raw.githubusercontent.com/nice1ce/food_market/main/dishes.json')
-            .then(response => response.json())
-            .then(data => {
-                window.dishes = data;
-                // Загружаем скрипты, которые зависят от dishes
-                const script1 = document.createElement('script');
-                script1.src = 'combos.js';
-                document.body.appendChild(script1);
+        // Загружаем блюда и инициализируем комбо
+        async function initCombos() {
+            try {
+                // Загружаем блюда
+                await loadDishes();
                 
-                script1.onload = function() {
+                // Загружаем скрипты
+                await new Promise((resolve, reject) => {
+                    const script1 = document.createElement('script');
+                    script1.src = 'combos.js';
+                    script1.onload = resolve;
+                    script1.onerror = reject;
+                    document.body.appendChild(script1);
+                });
+                
+                await new Promise((resolve, reject) => {
                     const script2 = document.createElement('script');
                     script2.src = 'comboDisplay.js';
+                    script2.onload = resolve;
+                    script2.onerror = reject;
                     document.body.appendChild(script2);
-                };
-            })
-            .catch(error => {
-                console.error('Error loading dishes:', error);
-            });
+                });
+                
+                // Убираем индикатор загрузки
+                document.getElementById('loading-indicator').style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error initializing combos:', error);
+                document.getElementById('loading-indicator').textContent = '(ошибка загрузки)';
+                document.getElementById('combo-grid').innerHTML = 
+                    '<p class="loading-message" style="color: #ff6b6b;">Ошибка загрузки комбо-ланчей. Пожалуйста, обновите страницу.</p>';
+            }
+        }
+        
+        // Запускаем инициализацию
+        document.addEventListener('DOMContentLoaded', initCombos);
     </script>
 </body>
 </html>
