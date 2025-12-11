@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Фуд-маркет - Собрать свой ланч</title>
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="combos.css">
+    <link rel="stylesheet" href="custom-combo.css">
+    <link media="print" rel="stylesheet" href="print.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header clearfix">
+        <nav class="main-menu">
+            <div><a href="index.html">Главная</a></div>
+            <div><a href="menu.html">Меню</a></div>
+            <div><a href="combo.html">Комбо-ланчи</a></div>
+            <div><a href="custom-combo.html" class="active">Собрать ланч</a></div>
+            <div><a href="">Отзывы</a></div>
+            <div><a href="auth.html">Войти</a></div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="custom-combo-section">
+            <h1>Собери свой идеальный ланч</h1>
+            <p>Выберите до 5 блюд и получите скидку 25% на весь заказ!</p>
+            
+            <div class="custom-combo-container">
+                <div class="combo-builder">
+                    <!-- Выбор супа -->
+                    <section class="category-section">
+                        <h2><span class="step-badge">1</span> Суп</h2>
+                        <div class="filters">
+                            <button class="filter-btn active" data-category="soup" data-kind="all">Все</button>
+                            <button class="filter-btn" data-category="soup" data-kind="fish">Рыбные</button>
+                            <button class="filter-btn" data-category="soup" data-kind="meat">Мясные</button>
+                            <button class="filter-btn" data-category="soup" data-kind="veg">Вегетарианские</button>
+                        </div>
+                        <div class="dishes-grid" id="soup-grid"></div>
+                    </section>
+                    
+                    <!-- Выбор стартера -->
+                    <section class="category-section">
+                        <h2><span class="step-badge">2</span> Стартер</h2>
+                        <div class="filters">
+                            <button class="filter-btn active" data-category="starter" data-kind="all">Все</button>
+                            <button class="filter-btn" data-category="starter" data-kind="fish">Рыбные</button>
+                            <button class="filter-btn" data-category="starter" data-kind="meat">Мясные</button>
+                            <button class="filter-btn" data-category="starter" data-kind="veg">Вегетарианские</button>
+                        </div>
+                        <div class="dishes-grid" id="starter-grid"></div>
+                    </section>
+                    
+                    <!-- Выбор основного блюда -->
+                    <section class="category-section">
+                        <h2><span class="step-badge">3</span> Основное блюдо</h2>
+                        <div class="filters">
+                            <button class="filter-btn active" data-category="main_dish" data-kind="all">Все</button>
+                            <button class="filter-btn" data-category="main_dish" data-kind="fish">Рыбные</button>
+                            <button class="filter-btn" data-category="main_dish" data-kind="meat">Мясные</button>
+                            <button class="filter-btn" data-category="main_dish" data-kind="veg">Вегетарианские</button>
+                        </div>
+                        <div class="dishes-grid" id="main-grid"></div>
+                    </section>
+                    
+                    <!-- Выбор напитка -->
+                    <section class="category-section">
+                        <h2><span class="step-badge">4</span> Напиток</h2>
+                        <div class="filters">
+                            <button class="filter-btn active" data-category="drink" data-kind="all">Все</button>
+                            <button class="filter-btn" data-category="drink" data-kind="cold">Холодные</button>
+                            <button class="filter-btn" data-category="drink" data-kind="hot">Горячие</button>
+                        </div>
+                        <div class="dishes-grid" id="drink-grid"></div>
+                    </section>
+                    
+                    <!-- Выбор десерта -->
+                    <section class="category-section">
+                        <h2><span class="step-badge">5</span> Десерт</h2>
+                        <div class="filters">
+                            <button class="filter-btn active" data-category="dessert" data-kind="all">Все</button>
+                            <button class="filter-btn" data-category="dessert" data-kind="small">Маленькие</button>
+                            <button class="filter-btn" data-category="dessert" data-kind="medium">Средние</button>
+                            <button class="filter-btn" data-category="dessert" data-kind="large">Большие</button>
+                        </div>
+                        <div class="dishes-grid" id="dessert-grid"></div>
+                    </section>
+                </div>
+                
+                <div class="combo-summary">
+                    <h3>Ваш ланч</h3>
+                    <div class="summary-list" id="summary-list">
+                        <p class="empty-message">Выберите блюда из категорий слева</p>
+                    </div>
+                    <div class="price-summary">
+                        <div class="price-row">
+                            <span>Стоимость блюд:</span>
+                            <span id="subtotal-price">0₽</span>
+                        </div>
+                        <div class="price-row discount">
+                            <span>Скидка 25%:</span>
+                            <span id="discount-amount">-0₽</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Итого:</span>
+                            <span id="total-price">0₽</span>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn" id="add-to-cart">Добавить в корзину</button>
+                    <p class="combo-hint">💡 Выберите по одному блюду из каждой категории для полного ланча</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <p style="margin: 0;"><a href="" title="Находится в разработке">Политика конфиденциальности</a>
+        <a href="" title="Будут сделаны(наверное)">Cookies</a>
+        <a href="feedback.html" title="Напиши нам">Обратная связь</a></p>
+        Контактная информация: 
+        Телефон: +7(000)000-00-00;
+        Почта: food_market_for_you@mail.ru
+    </footer>
+    
+    <!-- Уведомление -->
+    <div id="notification" class="notification-overlay" style="display: none;">
+        <div class="notification-window">
+            <p id="notification-text">Текст уведомления</p>
+            <button class="notification-btn" id="notification-ok">Окей</button>
+        </div>
+    </div>
+    
+    <script src="dishes.js"></script>
+    <script src="customCombo.js"></script>
+</body>
+</html>

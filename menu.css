@@ -75,18 +75,21 @@ header div{
   display: block;
   margin: 0 auto;
   border-radius: 35px;
-  width: 317.3px;
+  width: 417.3px;
   height: 285px;
+  object-fit: cover;
 }
 
-.soup_section, .main_dish, .drink{
+/* Исправлено: все секции используют один класс для сетки */
+.soup_section, .main_dish_section, .drink_section, .starter_section, .dessert_section{
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr 1fr;
   justify-content: center;
+  margin-bottom: 40px;
 }
 
-.soup_block, .main_dish_block, .drink_block{
+.soup_block, .main_dish_block, .drink_block, .starter_block, .dessert_block{
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -96,19 +99,26 @@ header div{
   cursor: pointer;
   background-color: white;
   border: 2px solid white;
-  width: 317.3px;
+  width: 417.3px;
   height: 440px;
   box-shadow: 20px 23px 53px rgba(0, 0, 0, 0.13);
+  transition: border 0.3s ease;
 }
 
-.soup_block.soup_block:hover, .main_dish_block:hover, .drink_block:hover{
+.soup_block:hover, .main_dish_block:hover, .drink_block:hover, .starter_block:hover, .dessert_block:hover{
   border: 2px solid black;
-  .add_buttom{
-    background-color:limegreen;
-    color: black;
-    border: 1px solid black;
-  }
 }
+
+.soup_block:hover .add_buttom,
+.main_dish_block:hover .add_buttom,
+.drink_block:hover .add_buttom,
+.starter_block:hover .add_buttom,
+.dessert_block:hover .add_buttom {
+  background-color:limegreen;
+  color: black;
+  border: 1px solid black;
+}
+
 .name, .weight, .price{
     text-align: left;
     margin: 5px 0px;
@@ -133,9 +143,12 @@ header div{
     background-color: #f1eee9;
     border-radius: 10px;
     height: 50px;
-    width: 317.3px;
-    margin: 10px auto 0px   ;
+    width: 417.3px;
+    margin: 10px auto 0px;
     padding: 10px 30px;
+    transition: all 0.3s ease;
+    font-family: "Work Sans", sans-serif;
+    font-size: 1em;
 }
 
 .form_menu{
@@ -167,10 +180,6 @@ header div{
   height: 30px;
 }
 
-.name{
-  height: 23px;
-}
-
 #add{
   margin: 10px 0;
 }
@@ -198,14 +207,15 @@ header div{
     margin: 0;
     justify-content: space-between;
   }
-  .soup_section, .main_dish, .drink{
+  .soup_section, .main_dish_section, .drink_section, .starter_section, .dessert_section{
     grid-template-columns: 1fr 1fr;
   }
-  .soup_block, .main_dish_block, .drink_block {
+  .soup_block, .main_dish_block, .drink_block, .starter_block, .dessert_block {
     margin: 0 auto;
     padding: 30px 40px;
     width: 280px;
     height: auto;
+    min-height: 400px;
   }
   .images, .add_buttom{
     width: 90%;
@@ -228,18 +238,18 @@ header div{
     flex-flow: column nowrap;
     align-items: center;
     text-align: center;
-    a{
-      font-size: 20px;
-    }
+  }
+  .main-menu a{
+    font-size: 20px;
   }
   .images, .add_buttom{
     width: 50%;
   }
-  .soup_section, .main_dish, .drink{
+  .soup_section, .main_dish_section, .drink_section, .starter_section, .dessert_section{
     grid-template-columns: 1fr;
     justify-content: center;
   }
-  .soup_block, .main_dish_block, .drink_block{
+  .soup_block, .main_dish_block, .drink_block, .starter_block, .dessert_block{
     font-size: 19px;
     grid-template-rows: 1fr 1fr 1fr;
     padding: 10px 10px;
@@ -247,6 +257,7 @@ header div{
     align-items: center;
     width: 90%;
     height: auto;
+    min-height: 380px;
   }
   h1{
       text-align: center;
@@ -256,3 +267,106 @@ header div{
   }
 }
 
+.soup_block.selected, 
+.main_dish_block.selected, 
+.drink_block.selected,
+.starter_block.selected,
+.dessert_block.selected {
+    border: 2px solid black !important;
+}
+
+.total-price {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+}
+/* Добавьте эти стили в menu.css */
+
+/* Стили для фильтров */
+.filter-button.active {
+    background-color: #2a2f37 !important;
+    color: white !important;
+}
+
+.filter-button:hover {
+    background-color: #f1eee9 !important;
+}
+
+.filter-button.active:hover {
+    background-color: #2a2f37 !important;
+}
+
+/* Стили для новых категорий */
+.starter_block, .dessert_block {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin: 0 auto;
+    padding: 30px 40px;
+    border-radius: 35px;
+    cursor: pointer;
+    background-color: white;
+    border: 2px solid white;
+    width: 417.3px;
+    height: 440px;
+    box-shadow: 20px 23px 53px rgba(0, 0, 0, 0.13);
+}
+
+.starter_block:hover, .dessert_block:hover {
+    border: 2px solid black;
+}
+
+.starter_block:hover .add_buttom,
+.dessert_block:hover .add_buttom {
+    background-color: limegreen;
+    color: black;
+    border: 1px solid black;
+}
+
+@media (max-width: 900px) {
+    .starter_section, .dessert_section {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .starter_block, .dessert_block {
+        width: 280px;
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .starter_section, .dessert_section {
+        grid-template-columns: 1fr;
+    }
+    
+    .starter_block, .dessert_block {
+        width: 90%;
+        height: auto;
+    }
+    
+    .filter-button {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+@import url('notification.css');
+
+.main-menu a.active {
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+}

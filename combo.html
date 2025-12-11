@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Фуд-маркет - Комбо-ланчи</title>
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="combos.css">
+    <link media="print" rel="stylesheet" href="print.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header clearfix">
+        <nav class="main-menu">
+            <div><a href="index.html">Главная</a></div>
+            <div><a href="menu.html">Меню</a></div>
+            <div><a href="combo.html" class="active">Комбо-ланчи</a></div>
+            <div><a href="custom-combo.html">Собрать ланч</a></div>
+            <div><a href="">Отзывы</a></div>
+            <div><a href="auth.html">Войти</a></div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="combo-section">
+            <h1>Готовые комбо-ланчи</h1>
+            <p>Выберите один из наших популярных наборов со скидкой до 30%!</p>
+            
+            <div class="combo-grid" id="combo-grid">
+                <!-- Комбо будут загружены через JavaScript -->
+            </div>
+            
+            <div class="combo-dessert-info">
+                <p>💡 <strong>Важно:</strong> Десерты можно добавлять в любой вид ланча по желанию. Вы также можете заменить десерт в любом комбо на другой из меню.</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <p style="margin: 0;"><a href="" title="Находится в разработке">Политика конфиденциальности</a>
+        <a href="" title="Будут сделаны(наверное)">Cookies</a>
+        <a href="feedback.html" title="Напиши нам">Обратная связь</a></p>
+        Контактная информация: 
+        Телефон: +7(000)000-00-00;
+        Почта: food_market_for_you@mail.ru
+    </footer>
+    
+    <script src="dishes.js"></script>
+    <script src="combos.js"></script>
+    <script src="comboDisplay.js"></script>
+</body>
+</html>
