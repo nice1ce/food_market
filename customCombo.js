@@ -1,8 +1,6 @@
 // customCombo.js
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof dishes !== 'undefined') {
-        initializeCustomCombo();
-    }
+document.addEventListener('dishesLoaded', function() {
+    initializeCustomCombo();
 });
 
 let selectedDishes = {

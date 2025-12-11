@@ -114,8 +114,6 @@ function calculateComboPrices() {
 }
 
 // Вызываем при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof dishes !== 'undefined') {
-        calculateComboPrices();
-    }
+document.addEventListener('dishesLoaded', function() {
+    calculateComboPrices();
 });

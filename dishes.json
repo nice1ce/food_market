@@ -53,6 +53,7 @@
     "image": "https://thumbs.dreamstime.com/b/minestra-fresca-del-pomodoro-30362072.jpg",
     "kind": "veg"
   },
+
   {
     "keyword": "fried_potatoes_mushrooms",
     "name": "Жареный картофель с грибами",
@@ -107,6 +108,7 @@
     "image": "https://images.gastronom.ru/oumzZuGmFjJUQMqW0xjMCCt1lo5cmO_pIHp3XDZeySw/pr:recipe-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzL2EyYmUzZTkxLWNhMDYtNGE0Yy04OTA1LTY0NmQ1NzdmODE3Mi5qcGc.webp",
     "kind": "veg"
   },
+
   {
     "keyword": "berry_morse",
     "name": "Ягодный морс",
@@ -161,6 +163,7 @@
     "image": "https://avatars.mds.yandex.net/i?id=e0f291768c6edbddd4d978e069d610f0_l-5222024-images-thumbs&n=13",
     "kind": "hot"
   },
+
   {
     "keyword": "caesar_salad",
     "name": "Салат Цезарь",
@@ -215,6 +218,7 @@
     "image": "https://www.cimbniaga.co.id/content/dam/cimb/inspirasi/hummus-makanan-arab.webp",
     "kind": "veg"
   },
+
   {
     "keyword": "fruit_salad",
     "name": "Фруктовый салат",

@@ -1,6 +1,6 @@
 // comboDisplay.js
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof combos !== 'undefined' && typeof dishes !== 'undefined') {
+document.addEventListener('dishesLoaded', function() {
+    if (typeof combos !== 'undefined') {
         displayCombos();
     }
 });

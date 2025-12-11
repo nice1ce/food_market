@@ -1,5 +1,5 @@
 // displayDishes.js
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('dishesLoaded', function() {
     initializeFilters();
     displayAllDishes();
 });

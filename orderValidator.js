@@ -55,7 +55,7 @@ function checkMissingDishes(order) {
 
 // Поиск подходящего комбо
 function findMatchingCombo(order) {
-    if (!window.combos || !window.dishes) return null;
+    if (!window.combos) return null;
     
     const orderKeywords = [
         order.soup?.keyword,
