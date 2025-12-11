@@ -46,8 +46,26 @@
         Почта: food_market_for_you@mail.ru
     </footer>
     
-    <script src="dishes.js"></script>
-    <script src="combos.js"></script>
-    <script src="comboDisplay.js"></script>
+    <!-- Загрузка dishes через API -->
+    <script>
+        fetch('https://raw.githubusercontent.com/nice1ce/food_market/main/dishes.json')
+            .then(response => response.json())
+            .then(data => {
+                window.dishes = data;
+                // Загружаем скрипты, которые зависят от dishes
+                const script1 = document.createElement('script');
+                script1.src = 'combos.js';
+                document.body.appendChild(script1);
+                
+                script1.onload = function() {
+                    const script2 = document.createElement('script');
+                    script2.src = 'comboDisplay.js';
+                    document.body.appendChild(script2);
+                };
+            })
+            .catch(error => {
+                console.error('Error loading dishes:', error);
+            });
+    </script>
 </body>
 </html>

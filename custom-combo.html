@@ -133,7 +133,21 @@
         </div>
     </div>
     
-    <script src="dishes.js"></script>
-    <script src="customCombo.js"></script>
+    <!-- Загрузка dishes через API -->
+    <script>
+        fetch('https://raw.githubusercontent.com/nice1ce/food_market/main/dishes.json')
+            .then(response => response.json())
+            .then(data => {
+                window.dishes = data;
+                // Загружаем customCombo.js после загрузки dishes
+                const script = document.createElement('script');
+                script.src = 'customCombo.js';
+                document.body.appendChild(script);
+            })
+            .catch(error => {
+                console.error('Error loading dishes:', error);
+                alert('Ошибка загрузки меню. Пожалуйста, обновите страницу.');
+            });
+    </script>
 </body>
 </html>

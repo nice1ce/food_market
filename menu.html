@@ -163,9 +163,29 @@
             </div>
         </div>
 
-        <script src="dishes.js"></script>
-        <script src="displayDishes.js"></script>
-        <script src="orderManager.js"></script>
-        <script src="orderValidator.js"></script>
+        <!-- Загрузка dishes через API -->
+        <script>
+            fetch('https://raw.githubusercontent.com/nice1ce/food_market/main/dishes.json')
+                .then(response => response.json())
+                .then(data => {
+                    window.dishes = data;
+                    // Загружаем скрипты, которые зависят от dishes
+                    const scripts = ['displayDishes.js', 'orderManager.js', 'orderValidator.js'];
+                    scripts.forEach(script => {
+                        const scriptElement = document.createElement('script');
+                        scriptElement.src = script;
+                        document.body.appendChild(scriptElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading dishes:', error);
+                    // Загружаем комбо даже если dishes не загрузились
+                    const scriptElement = document.createElement('script');
+                    scriptElement.src = 'combos.js';
+                    document.body.appendChild(scriptElement);
+                });
+        </script>
+        
+        <script src="combos.js"></script>
     </body>
 </html>
