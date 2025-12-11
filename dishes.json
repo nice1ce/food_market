@@ -1,0 +1,272 @@
+[
+  {
+    "keyword": "borscht",
+    "name": "Мясной борщ",
+    "price": 300,
+    "category": "soup",
+    "count": "350 мл",
+    "image": "https://everydfood.com/wp-content/uploads/2024/01/Authentic-borscht-soup-recipe.jpg",
+    "kind": "meat"
+  },
+  {
+    "keyword": "solyanka",
+    "name": "Солянка",
+    "price": 330,
+    "category": "soup",
+    "count": "350 мл",
+    "image": "https://images2.novochag.ru/upload/img_cache/d33/d33d9d61f4d59fddc7721b587a7bcff0_ce_2370x1248x0x166_cropped_1200x628.jpg",
+    "kind": "meat"
+  },
+  {
+    "keyword": "fish_soup",
+    "name": "Уха царская",
+    "price": 350,
+    "category": "soup",
+    "count": "350 мл",
+    "image": "https://avatars.mds.yandex.net/i?id=0efb33722f59bbbb0602fd35060c1691_l-5235063-images-thumbs&n=13",
+    "kind": "fish"
+  },
+  {
+    "keyword": "salmon_chowder",
+    "name": "Сливочный суп с лососем",
+    "price": 380,
+    "category": "soup",
+    "count": "350 мл",
+    "image": "https://www.chefmarket.ru/blog/wp-content/uploads/2021/03/chowder-with-salmon-e1614944443197.jpg",
+    "kind": "fish"
+  },
+  {
+    "keyword": "mushroom_soup",
+    "name": "Грибной крем-суп",
+    "price": 280,
+    "category": "soup",
+    "count": "350 мл",
+    "image": "https://obitel-minsk.ru/assets/images/read/2022/inside/postnye-krem-supy-1.jpg",
+    "kind": "veg"
+  },
+  {
+    "keyword": "tomato_soup",
+    "name": "Томатный суп с базиликом",
+    "price": 270,
+    "category": "soup",
+    "count": "350 мл",
+    "image": "https://thumbs.dreamstime.com/b/minestra-fresca-del-pomodoro-30362072.jpg",
+    "kind": "veg"
+  },
+  {
+    "keyword": "fried_potatoes_mushrooms",
+    "name": "Жареный картофель с грибами",
+    "price": 250,
+    "category": "main_dish",
+    "count": "300 г",
+    "image": "https://i.ytimg.com/vi/vE4HMNkMMj8/maxresdefault.jpg",
+    "kind": "veg"
+  },
+  {
+    "keyword": "macaroni_flot",
+    "name": "Макароны по-флотски",
+    "price": 300,
+    "category": "main_dish",
+    "count": "300 г",
+    "image": "https://www.ecosever.ru/image/preview/article/9/3/4/58934_amp.jpeg",
+    "kind": "meat"
+  },
+  {
+    "keyword": "rice_teriyaki",
+    "name": "Рис с курицей терияки",
+    "price": 280,
+    "category": "main_dish",
+    "count": "300 г",
+    "image": "https://cdn.lifehacker.ru/wp-content/uploads/2025/08/shutterstock_2031795911_1_1754416425.jpg",
+    "kind": "meat"
+  },
+  {
+    "keyword": "grilled_salmon",
+    "name": "Гриль-лосось с овощами",
+    "price": 420,
+    "category": "main_dish",
+    "count": "350 г",
+    "image": "https://avatars.mds.yandex.net/i?id=77dbffc04d870bf6f3d75ff3b130db0b_l-5453486-images-thumbs&n=13",
+    "kind": "fish"
+  },
+  {
+    "keyword": "fish_cutlets",
+    "name": "Рыбные котлеты с пюре",
+    "price": 320,
+    "category": "main_dish",
+    "count": "350 г",
+    "image": "https://scdn.chibbis.ru/live/products/813ace16e271f9bba263dcc53ac0cb18.png",
+    "kind": "fish"
+  },
+  {
+    "keyword": "vegetable_stew",
+    "name": "Овощное рагу",
+    "price": 240,
+    "category": "main_dish",
+    "count": "300 г",
+    "image": "https://images.gastronom.ru/oumzZuGmFjJUQMqW0xjMCCt1lo5cmO_pIHp3XDZeySw/pr:recipe-cover-image/g:ce/rs:auto:0:0:0/L2Ntcy9hbGwtaW1hZ2VzL2EyYmUzZTkxLWNhMDYtNGE0Yy04OTA1LTY0NmQ1NzdmODE3Mi5qcGc.webp",
+    "kind": "veg"
+  },
+  {
+    "keyword": "berry_morse",
+    "name": "Ягодный морс",
+    "price": 150,
+    "category": "drink",
+    "count": "300 мл",
+    "image": "https://menu2go.ru/images/food/56/56_20210330155239_3942.jpg",
+    "kind": "cold"
+  },
+  {
+    "keyword": "orange_juice",
+    "name": "Апельсиновый сок",
+    "price": 130,
+    "category": "drink",
+    "count": "300 мл",
+    "image": "https://i.pinimg.com/originals/ab/b3/40/abb340f4d8f641433a35af2244f0905f.jpg",
+    "kind": "cold"
+  },
+  {
+    "keyword": "apple_juice",
+    "name": "Яблочный сок",
+    "price": 110,
+    "category": "drink",
+    "count": "300 мл",
+    "image": "https://img.freepik.com/free-photo/front-view-fresh-apple-juice-with-fresh-apples-dark-color-drink-photo-cocktail-fruit_140725-92828.jpg?semt=ais_hybrid&w=740",
+    "kind": "cold"
+  },
+  {
+    "keyword": "green_tea",
+    "name": "Зеленый чай",
+    "price": 120,
+    "category": "drink",
+    "count": "400 мл",
+    "image": "https://i.pinimg.com/736x/2f/7f/95/2f7f95fdcadfa6117a027979502255e1.jpg",
+    "kind": "hot"
+  },
+  {
+    "keyword": "black_tea",
+    "name": "Черный чай с лимоном",
+    "price": 120,
+    "category": "drink",
+    "count": "400 мл",
+    "image": "https://yandex-images.clstorage.net/55rlKK100/8f78b4ZO/Qb5nFqxHam1loQhuKTT4piW8BMY54gyBVigaIgUuEGcq8GfZmyVJn0ZJGqzMlZ19aO4qFnHZVIfiHCuIBY92b8T6UiKpQw-JFaFZKpmQOQbkvVAH7dNYoMZob7LAOGagGLJhfmgiW92U7drtWCFb2xnszSdEa2fQd31va3Y946rS30f0zjUqaffTivn5NskEhG_CRVlge_LjiNlE9lkHIqnjUdw5M6qvJEzb60viaLuevV8GtvlEQXQNDnpWHfKq8c_EdXzn6xtmUXv5ycYK5JUtIIWb07ly88ub9tSIlzA6EVPs-6HKjKacO_lZE1r4Da7-5kX4NEIWTG4ax_zRqpMfF5bMZrh4phF7uZqGOjSmb7BVW0OK8MGpqvUEGzbwSENR3hoBy76HfQnZeeEo6P7enSTEuWYT5by9GoVdI_mQ3VUXfMRYOJeReyuphCjHNq_xNmizGpEhebtFBxvUUxshwx_p4mvupB0YqClQ-xnMjRwEldmkkdYeD5lH7_CIwNyX915GCanl08tpaiQZ1UXM43ZI0QowUQvrd_SaFXNqsoO922BKPUUcyLipUFuo3t4N5xXLBZNl3jxIdUzCqNF_J8eMlijLtQPJiJgE20YVLwCFeTE6ssELGydGS3WQO5EAHElA6883buiIizDLWt68TrU2WZWwp-0uKqbvApgwj9X2_1d6CedSC6uZ9st2dZ_g56qBiMBi6Qvk9lgVgCmC4k_549itROyISzqQ2gtvHr8XZdr38oX-7rq0bMCZ0391la4HOMlEAiorqoTaBoUe8afJg2txYkn4R6dKxaD4kDHP6KGYv9SPC6mrculpTY0tdkQ6RAOnDzwaF32DmdA-hRUuJFt41QA4yVqXSNZH3aKn-JFYEmC56tVnKTeDSoBRrRlzay0lHpnLi7EpKE0sXSV3KVXw9A49KFa-EFnxnFamf2Y7mRUQKih4VpoEx_-yFHshqJFjmErE98t0w",
+    "kind": "hot"
+  },
+  {
+    "keyword": "coffee_latte",
+    "name": "Кофе латте",
+    "price": 180,
+    "category": "drink",
+    "count": "350 мл",
+    "image": "https://avatars.mds.yandex.net/i?id=e0f291768c6edbddd4d978e069d610f0_l-5222024-images-thumbs&n=13",
+    "kind": "hot"
+  },
+  {
+    "keyword": "caesar_salad",
+    "name": "Салат Цезарь",
+    "price": 320,
+    "category": "starter",
+    "count": "250 г",
+    "image": "https://avatars.mds.yandex.net/i?id=d9d7d4d71fa3f7948e2ac8cacbab355a9dacb5a6-4080872-images-thumbs&n=13",
+    "kind": "meat"
+  },
+  {
+    "keyword": "shrimp_cocktail",
+    "name": "Салат с креветками",
+    "price": 380,
+    "category": "starter",
+    "count": "200 г",
+    "image": "https://static.tildacdn.com/stor3131-6233-4361-b865-666534626265/49042811.jpg",
+    "kind": "fish"
+  },
+  {
+    "keyword": "greek_salad",
+    "name": "Греческий салат",
+    "price": 280,
+    "category": "starter",
+    "count": "300 г",
+    "image": "https://static.tildacdn.com/stor3830-6663-4461-a564-646234666637/45098605.jpg",
+    "kind": "veg"
+  },
+  {
+    "keyword": "caprese_salad",
+    "name": "Салат Капрезе",
+    "price": 290,
+    "category": "starter",
+    "count": "250 г",
+    "image": "https://kuban24.tv/wp-content/uploads/2024/01/Untitled-9.jpg",
+    "kind": "veg"
+  },
+  {
+    "keyword": "vegetable_bruschetta",
+    "name": "Брускетта с овощами",
+    "price": 220,
+    "category": "starter",
+    "count": "180 г",
+    "image": "https://i.pinimg.com/originals/32/68/71/326871e820279c2782b189852f16a1ee.jpg",
+    "kind": "veg"
+  },
+  {
+    "keyword": "hummus_plate",
+    "name": "Тарелка с хумусом",
+    "price": 240,
+    "category": "starter",
+    "count": "200 г",
+    "image": "https://www.cimbniaga.co.id/content/dam/cimb/inspirasi/hummus-makanan-arab.webp",
+    "kind": "veg"
+  },
+  {
+    "keyword": "fruit_salad",
+    "name": "Фруктовый салат",
+    "price": 190,
+    "category": "dessert",
+    "count": "200 г",
+    "image": "https://goldniva.ru/upload/sprint.editor/c8c/f3s8ir1cikxt50syuqj0s2ocpc1kyz3b.jpg",
+    "kind": "small"
+  },
+  {
+    "keyword": "ice_cream",
+    "name": "Мороженое пломбир",
+    "price": 150,
+    "category": "dessert",
+    "count": "100 г",
+    "image": "https://nagor-shop.ru/wp-content/uploads/2020/09/413purhojwl-416x416.jpg",
+    "kind": "small"
+  },
+  {
+    "keyword": "macarons",
+    "name": "Макаруны ассорти",
+    "price": 210,
+    "category": "dessert",
+    "count": "120 г",
+    "image": "https://posuda-bohemia.ru/wa-data/public/shop/products/42/01/140142/images/486124/486124.970.jpg",
+    "kind": "small"
+  },
+  {
+    "keyword": "tiramisu",
+    "name": "Тирамису",
+    "price": 280,
+    "category": "dessert",
+    "count": "150 г",
+    "image": "https://i.pinimg.com/originals/43/ba/bf/43babf30b29e9250ec81ada2489dea00.jpg?nii=t",
+    "kind": "medium"
+  },
+  {
+    "keyword": "cheesecake",
+    "name": "Чизкейк Нью-Йорк",
+    "price": 300,
+    "category": "dessert",
+    "count": "160 г",
+    "image": "https://peri-restobar.ru/uploads/s/i/6/i/i6i8fvbwd6ra/img/full_ULGkUb2d.jpg",
+    "kind": "medium"
+  },
+  {
+    "keyword": "chocolate_cake",
+    "name": "Шоколадный торт",
+    "price": 320,
+    "category": "dessert",
+    "count": "180 г",
+    "image": "https://i.pinimg.com/originals/da/8b/51/da8b51397551d4fadb89d940075a70cc.jpg",
+    "kind": "large"
+  }
+]
