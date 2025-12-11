@@ -180,7 +180,7 @@ const dishes = [
     },
     {
         keyword: "shrimp_cocktail",
-        name: "Коктейль из креветок",
+        name: "Салат с креветками",
         price: 380,
         category: "starter",
         count: "200 г",
