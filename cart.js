@@ -1,247 +1,267 @@
-// cart.js
+// cart.js — адаптирован под cart.html (id="cart-items", id="cart-empty", id="summary-total")
+// и под localStorage.cart, который может быть массивом (как в customCombo.js)
 
-document.addEventListener('dishesLoaded', function () {
-    initCartPage();
-});
+document.addEventListener("DOMContentLoaded", () => {
+  const CART_KEY = "cart";
 
-function getStoredOrder() {
+  const cartItemsEl = document.getElementById("cart-items");
+  const cartEmptyEl = document.getElementById("cart-empty");
+  const totalEl = document.getElementById("summary-total");
+
+  if (!cartItemsEl || !cartEmptyEl || !totalEl) return;
+
+  // ---------- storage ----------
+  function loadRawCart() {
     try {
-        const raw = localStorage.getItem('orderDishes');
-        if (!raw) return null;
-        return JSON.parse(raw);
-    } catch {
-        return null;
-    }
-}
+      const raw = localStorage.getItem(CART_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
 
-function setStoredOrder(orderObj) {
-    try {
-        localStorage.setItem('orderDishes', JSON.stringify(orderObj));
+      // customCombo.js сохраняет МАССИВ
+      if (Array.isArray(parsed)) return parsed;
+
+      // если вдруг старый формат-объект {id: item}
+      if (parsed && typeof parsed === "object") {
+        return Object.values(parsed);
+      }
+
+      return [];
     } catch (e) {
-        console.error('Не удалось сохранить заказ', e);
+      console.error("cart load error", e);
+      return [];
     }
-}
+  }
 
-function initCartPage() {
-    const order = getStoredOrder() || {
-        soup: null,
-        starter: null,
-        main_dish: null,
-        drink: null,
-        dessert: null
-    };
+  function saveRawCart(items) {
+    localStorage.setItem(CART_KEY, JSON.stringify(items));
+  }
 
-    renderCartItems(order);
-    updateTotal(order);
-    initForm(order);
-}
+  // ---------- normalize -> dish counts ----------
+  // собираем все блюда из любых элементов корзины в map keyword -> {dish, qty}
+  function buildDishMap(rawItems) {
+    const map = new Map();
 
-// ---------- РЕНДЕР КАРТОЧЕК "Состав заказа" ----------
-
-function renderCartItems(order) {
-    const container = document.getElementById('cart-items');
-    const empty = document.getElementById('cart-empty');
-    if (!container || !empty) return;
-
-    container.innerHTML = '';
-
-    const categories = ['soup', 'starter', 'main_dish', 'drink', 'dessert'];
-    const categoriesNames = {
-        soup: 'Суп',
-        starter: 'Стартер',
-        main_dish: 'Главное блюдо',
-        drink: 'Напиток',
-        dessert: 'Десерт'
-    };
-
-    let hasAny = false;
-
-    categories.forEach(cat => {
-        const keyword = order[cat];
-        if (!keyword) return;
-
-        const dish = (window.dishes || []).find(d => d.keyword === keyword);
+    function inc(keyword, dishObj, qty = 1) {
+      if (!keyword) return;
+      const cur = map.get(keyword);
+      if (cur) {
+        cur.qty += qty;
+      } else {
+        // dishObj может быть полным объектом блюда (из customCombo.js)
+        // или найдём по dishes.js
+        const dish = dishObj || (window.dishes || []).find(d => d.keyword === keyword);
         if (!dish) return;
+        map.set(keyword, { dish, qty });
+      }
+    }
 
-        hasAny = true;
+    rawItems.forEach(item => {
+      // 1) кастомный ланч: item.dishes = [dishObj, dishObj...]
+      if (Array.isArray(item?.dishes)) {
+        item.dishes.forEach(d => inc(d.keyword, d, 1));
+        return;
+      }
 
-        const card = document.createElement('div');
-        card.className = 'cart-item-card';
-        card.innerHTML = `
-            <p class="cart-item-category">${categoriesNames[cat]}</p>
-            <img src="${dish.image}" alt="${dish.name}">
-            <p class="cart-item-name">${dish.name}</p>
-            <p class="cart-item-price">${dish.price}₽</p>
-            <p class="cart-item-count">${dish.count}</p>
-            <button class="cart-item-remove" data-category="${cat}">Удалить</button>
-        `;
-        container.appendChild(card);
+      // 2) вариант "блюдо в корзине" (если когда-нибудь появится)
+      if (item?.type === "dish" && item.keyword) {
+        inc(item.keyword, null, item.qty || 1);
+        return;
+      }
+
+      // 3) если вдруг хранятся dishKeywords
+      if (Array.isArray(item?.dishKeywords)) {
+        item.dishKeywords.forEach(k => inc(k, null, 1));
+        return;
+      }
     });
 
-    if (!hasAny) {
-        empty.style.display = 'block';
-    } else {
-        empty.style.display = 'none';
+    return map;
+  }
+
+  // ---------- render ----------
+  function render() {
+    const raw = loadRawCart();
+    const map = buildDishMap(raw);
+
+    cartItemsEl.innerHTML = "";
+
+    if (map.size === 0) {
+      cartEmptyEl.style.display = "block";
+      totalEl.textContent = "0₽";
+      return;
     }
 
-    // обработчик удаления (делегирование)
-    container.onclick = function (e) {
-        const btn = e.target.closest('.cart-item-remove');
-        if (!btn) return;
-        const cat = btn.dataset.category;
-        const current = getStoredOrder() || {};
-        current[cat] = null;
-        setStoredOrder(current);
-        renderCartItems(current);
-        updateTotal(current);
-    };
-}
-
-// ---------- Подсчёт общей стоимости ----------
-
-function updateTotal(order) {
-    if (!window.dishes) return;
+    cartEmptyEl.style.display = "none";
 
     let total = 0;
 
-    Object.values(order).forEach(keyword => {
-        if (!keyword) return;
-        const dish = window.dishes.find(d => d.keyword === keyword);
-        if (dish) total += dish.price;
-    });
+    for (const [keyword, { dish, qty }] of map.entries()) {
+      total += dish.price * qty;
 
-    const totalSpan = document.getElementById('summary-total');
-    if (totalSpan) {
-        totalSpan.textContent = `${total}₽`;
+      const card = document.createElement("div");
+      card.className = "cart-item-card";
+      card.innerHTML = `
+        <p class="cart-item-category">${categoryTitle(dish.category)}</p>
+        <img src="${dish.image}" alt="${dish.name}">
+        <p class="cart-item-name">${dish.name}</p>
+        <p class="cart-item-price">${dish.price}₽ ${qty > 1 ? `<span style="color:#666">× ${qty}</span>` : ""}</p>
+        <p class="cart-item-count">${dish.count}</p>
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
+          <button class="cart-dec" data-key="${keyword}">−</button>
+          <button class="cart-inc" data-key="${keyword}">+</button>
+          <button class="cart-remove" data-key="${keyword}">Удалить</button>
+        </div>
+      `;
+      cartItemsEl.appendChild(card);
     }
-}
 
-// ---------- ИНИЦИАЛИЗАЦИЯ ФОРМЫ И ОТПРАВКА ----------
+    totalEl.textContent = `${total}₽`;
+  }
 
-function buildCurrentOrderObject(orderStorage) {
-    // превращаем keywords в объекты блюд
-    const result = {
-        soup: null,
-        starter: null,
-        main_dish: null,
-        drink: null,
-        dessert: null
+  function categoryTitle(cat) {
+    const map = {
+      soup: "Суп",
+      starter: "Стартер",
+      main_dish: "Главное блюдо",
+      drink: "Напиток",
+      dessert: "Десерт"
     };
+    return map[cat] || "";
+  }
 
-    if (!window.dishes) return result;
+  // ---------- cart actions (только внутри корзины) ----------
+  // Уменьшаем/увеличиваем количество блюда в localStorage.cart, не трогая меню
+  function changeDishQty(keyword, delta) {
+    const raw = loadRawCart();
 
-    Object.keys(result).forEach(cat => {
-        const keyword = orderStorage[cat];
-        if (!keyword) return;
-        const dish = window.dishes.find(d => d.keyword === keyword);
-        if (dish) result[cat] = dish;
+    // Сначала пробуем найти item типа dish (если появится в будущем)
+    for (const item of raw) {
+      if (item?.type === "dish" && item.keyword === keyword) {
+        item.qty = (item.qty || 1) + delta;
+        if (item.qty <= 0) {
+          const idx = raw.indexOf(item);
+          raw.splice(idx, 1);
+        }
+        saveRawCart(raw);
+        return;
+      }
+    }
+
+    // Иначе работаем с кастомными ланчами (item.dishes)
+    if (delta < 0) {
+      // убрать 1 шт: удаляем первое вхождение keyword из любого combo.dishes
+      for (let i = 0; i < raw.length; i++) {
+        const item = raw[i];
+        if (!Array.isArray(item?.dishes)) continue;
+
+        const di = item.dishes.findIndex(d => d.keyword === keyword);
+        if (di !== -1) {
+          item.dishes.splice(di, 1);
+          if (item.dishes.length === 0) raw.splice(i, 1);
+          saveRawCart(raw);
+          return;
+        }
+      }
+    } else {
+      // добавить 1 шт: добавим блюдо как отдельный item типа dish (чтобы не ломать комбо)
+      raw.push({ type: "dish", keyword, qty: 1 });
+      saveRawCart(raw);
+      return;
+    }
+  }
+
+  function removeDishAll(keyword) {
+    const raw = loadRawCart();
+
+    // убрать item type dish
+    for (let i = raw.length - 1; i >= 0; i--) {
+      const item = raw[i];
+
+      if (item?.type === "dish" && item.keyword === keyword) {
+        raw.splice(i, 1);
+        continue;
+      }
+
+      if (Array.isArray(item?.dishes)) {
+        item.dishes = item.dishes.filter(d => d.keyword !== keyword);
+        if (item.dishes.length === 0) raw.splice(i, 1);
+      }
+
+      if (Array.isArray(item?.dishKeywords)) {
+        item.dishKeywords = item.dishKeywords.filter(k => k !== keyword);
+        if (item.dishKeywords.length === 0) raw.splice(i, 1);
+      }
+    }
+
+    saveRawCart(raw);
+  }
+
+  cartItemsEl.addEventListener("click", (e) => {
+    const inc = e.target.closest(".cart-inc");
+    const dec = e.target.closest(".cart-dec");
+    const rem = e.target.closest(".cart-remove");
+
+    if (inc) {
+      changeDishQty(inc.dataset.key, +1);
+      render();
+    }
+    if (dec) {
+      changeDishQty(dec.dataset.key, -1);
+      render();
+    }
+    if (rem) {
+      removeDishAll(rem.dataset.key);
+      render();
+    }
+  });
+
+  window.addComboToCart = function(combo) {
+  // combo.dishes = [{keyword: ...}, ...]
+  try {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (!Array.isArray(cart)) cart = [];
+
+    // Добавляем блюда комбо в корзину "по отдельности"
+    combo.dishes.forEach(d => {
+      cart.push({ type: 'dish', keyword: d.keyword, qty: 1 });
     });
 
-    return result;
-}
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(`Комбо "${combo.name}" добавлено в корзину`);
+  } catch (e) {
+    console.error('addComboToCart error', e);
+  }
+};
 
-function initForm(orderStorage) {
-    const form = document.getElementById('order-form');
-    if (!form) return;
+// customCombo.js может вызывать addCustomComboToCartFromKeywords(...)
+window.addCustomComboToCartFromKeywords = function(dishKeywords, totalPrice) {
+  try {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (!Array.isArray(cart)) cart = [];
 
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
+    dishKeywords.forEach(k => cart.push({ type: 'dish', keyword: k, qty: 1 }));
 
-        const currentOrder = buildCurrentOrderObject(orderStorage);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Собранный ланч добавлен в корзину');
+  } catch (e) {
+    console.error('addCustomComboToCartFromKeywords error', e);
+  }
+};
 
-        // проверки на пустые категории (как в ЛР6)
-        const missing = checkMissingDishes(currentOrder); // из orderValidator.js
-        if (missing.length > 0) {
-            showNotification(missing);
-            return;
-        }
+// если где-то вызывается addDishToCart(keyword)
+window.addDishToCart = function(keyword) {
+  try {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (!Array.isArray(cart)) cart = [];
 
-        const matchedCombo = findMatchingCombo(currentOrder); // из orderValidator.js
-        if (!matchedCombo) {
-            showNotification(
-                ["Ваш заказ не соответствует ни одному из доступных комбо-ланчей."],
-                true
-            );
-            return;
-        }
+    cart.push({ type: 'dish', keyword, qty: 1 });
 
-        // Все ок — собираем данные для отправки
-        const name = document.getElementById('name_text').value.trim();
-        const email = document.getElementById('email_but').value.trim();
-        const subscribe = document.getElementById('subscribe').checked ? 1 : 0;
-        const phone = document.getElementById('phone_but').value.trim();
-        const address = document.getElementById('address').value.trim();
-        const comment = document.getElementById('order_comment').value.trim();
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Блюдо добавлено в корзину');
+  } catch (e) {
+    console.error('addDishToCart error', e);
+  }
+};
 
-        const timeChoice = form.querySelector('input[name="time_choice"]:checked')?.value || 'now';
-        const timeInput = document.getElementById('deliv_time').value;
-
-        const delivery_type = timeChoice; // "now" или "by_time"
-        const delivery_time = timeChoice === 'by_time' ? timeInput : null;
-
-        const soupDish = currentOrder.soup;
-        const starterDish = currentOrder.starter;
-        const mainDish = currentOrder.main_dish;
-        const drinkDish = currentOrder.drink;
-        const dessertDish = currentOrder.dessert;
-
-        const orderData = {
-            full_name: name,
-            email: email,
-            subscribe: subscribe,
-            phone: phone,
-            delivery_address: address,
-            delivery_type: delivery_type,
-            delivery_time: delivery_time,
-            comment: comment,
-            soup_id: soupDish ? (soupDish.id || null) : null,
-            main_course_id: mainDish ? (mainDish.id || null) : null,
-            salad_id: starterDish ? (starterDish.id || null) : null,
-            drink_id: drinkDish ? (drinkDish.id || null) : null,
-            dessert_id: dessertDish ? (dessertDish.id || null) : null
-        };
-
-        try {
-            const API_BASE = 'https://edu.std-900.ist.mospolytech.ru'; // или http://lab8-api.std-900...
-            const API_KEY = 'ВСТАВЬ_СВОЙ_API_KEY';
-
-            const response = await fetch(
-                `${API_BASE}/labs/api/orders?api_key=${API_KEY}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(orderData)
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error('Ошибка ответа сервера');
-            }
-
-            const data = await response.json();
-            console.log('Ответ сервера:', data);
-
-            alert('Заказ успешно оформлен!');
-
-            // очистить localStorage и UI
-            localStorage.removeItem('orderDishes');
-
-            const emptyOrder = {
-                soup: null,
-                starter: null,
-                main_dish: null,
-                drink: null,
-                dessert: null
-            };
-
-            renderCartItems(emptyOrder);
-            updateTotal(emptyOrder);
-            form.reset();
-        } catch (err) {
-            console.error(err);
-            alert('Не удалось отправить заказ. Попробуйте позже.');
-        }
-    });
-}
+  render();
+});

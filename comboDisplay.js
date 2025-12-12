@@ -68,34 +68,3 @@ function createComboElement(combo) {
     return comboDiv;
 }
 
-function selectCombo(comboId) {
-    const combo = combos.find(c => c.id === comboId);
-    if (!combo) return;
-    
-    // Очищаем текущий заказ
-    if (typeof window.currentOrder !== 'undefined') {
-        window.currentOrder = {
-            soup: null,
-            main_dish: null,
-            drink: null,
-            starter: null,
-            dessert: null
-        };
-    }
-    
-    // Добавляем все блюда из комбо в заказ
-    combo.dishes.forEach(dishCombo => {
-        const dish = dishes.find(d => d.keyword === dishCombo.keyword);
-        if (dish && typeof window.addDishToOrder === 'function') {
-            window.addDishToOrder(dish);
-        }
-    });
-    
-    // Показываем уведомление об успешном выборе
-    alert(`Комбо "${combo.name}" выбрано! Скидка ${combo.discount}%. Общая стоимость: ${combo.discountedPrice}₽`);
-    
-    // Перенаправляем на страницу заказа
-    setTimeout(() => {
-        window.location.href = 'menu.html';
-    }, 2000);
-}
