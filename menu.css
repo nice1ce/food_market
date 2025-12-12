@@ -106,7 +106,7 @@ header div{
 }
 
 .soup_block:hover, .main_dish_block:hover, .drink_block:hover, .starter_block:hover, .dessert_block:hover{
-  border: 2px solid black;
+  border: 2px solid #ddd;
 }
 
 .soup_block:hover .add_buttom,
@@ -246,13 +246,14 @@ header div{
   }
 }
 
-.soup_block.selected, 
+/* УДАЛЕНО: Стили для выбранных блюд - они больше не нужны */
+/* .soup_block.selected, 
 .main_dish_block.selected, 
 .drink_block.selected,
 .starter_block.selected,
 .dessert_block.selected {
     border: 2px solid black !important;
-}
+} */
 
 .total-price {
     text-align: center;
@@ -297,7 +298,7 @@ header div{
 }
 
 .starter_block:hover, .dessert_block:hover {
-    border: 2px solid black;
+    border: 2px solid #ddd;
 }
 
 .starter_block:hover .add_buttom,
@@ -348,4 +349,18 @@ header div{
     color: white;
     border-radius: 5px;
     padding: 5px 10px;
+}
+
+.cart-counter {
+    display: none;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    vertical-align: top;
 }

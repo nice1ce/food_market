@@ -1,267 +1,433 @@
-// cart.js — адаптирован под cart.html (id="cart-items", id="cart-empty", id="summary-total")
-// и под localStorage.cart, который может быть массивом (как в customCombo.js)
+// cart.js - обновленная версия с поддержкой комбо
+const CART_KEY = 'cart';
 
-document.addEventListener("DOMContentLoaded", () => {
-  const CART_KEY = "cart";
-
-  const cartItemsEl = document.getElementById("cart-items");
-  const cartEmptyEl = document.getElementById("cart-empty");
-  const totalEl = document.getElementById("summary-total");
-
-  if (!cartItemsEl || !cartEmptyEl || !totalEl) return;
-
-  // ---------- storage ----------
-  function loadRawCart() {
-    try {
-      const raw = localStorage.getItem(CART_KEY);
-      if (!raw) return [];
-      const parsed = JSON.parse(raw);
-
-      // customCombo.js сохраняет МАССИВ
-      if (Array.isArray(parsed)) return parsed;
-
-      // если вдруг старый формат-объект {id: item}
-      if (parsed && typeof parsed === "object") {
-        return Object.values(parsed);
-      }
-
-      return [];
-    } catch (e) {
-      console.error("cart load error", e);
-      return [];
-    }
-  }
-
-  function saveRawCart(items) {
-    localStorage.setItem(CART_KEY, JSON.stringify(items));
-  }
-
-  // ---------- normalize -> dish counts ----------
-  // собираем все блюда из любых элементов корзины в map keyword -> {dish, qty}
-  function buildDishMap(rawItems) {
-    const map = new Map();
-
-    function inc(keyword, dishObj, qty = 1) {
-      if (!keyword) return;
-      const cur = map.get(keyword);
-      if (cur) {
-        cur.qty += qty;
-      } else {
-        // dishObj может быть полным объектом блюда (из customCombo.js)
-        // или найдём по dishes.js
-        const dish = dishObj || (window.dishes || []).find(d => d.keyword === keyword);
-        if (!dish) return;
-        map.set(keyword, { dish, qty });
-      }
-    }
-
-    rawItems.forEach(item => {
-      // 1) кастомный ланч: item.dishes = [dishObj, dishObj...]
-      if (Array.isArray(item?.dishes)) {
-        item.dishes.forEach(d => inc(d.keyword, d, 1));
-        return;
-      }
-
-      // 2) вариант "блюдо в корзине" (если когда-нибудь появится)
-      if (item?.type === "dish" && item.keyword) {
-        inc(item.keyword, null, item.qty || 1);
-        return;
-      }
-
-      // 3) если вдруг хранятся dishKeywords
-      if (Array.isArray(item?.dishKeywords)) {
-        item.dishKeywords.forEach(k => inc(k, null, 1));
-        return;
-      }
+// Глобальные функции для добавления в корзину
+window.addDishToCart = function(dish) {
+    addToCart({
+        type: 'dish',
+        keyword: dish.keyword,
+        name: dish.name,
+        price: dish.price,
+        image: dish.image,
+        count: dish.count,
+        category: dish.category
     });
+    showNotification(`${dish.name} добавлен в корзину`);
+    return true;
+};
 
-    return map;
-  }
+window.addComboToCart = function(combo) {
+    // Добавляем комбо как одну позицию
+    addToCart({
+        type: 'combo',
+        id: combo.id,
+        name: combo.name,
+        price: combo.totalPrice,
+        discountedPrice: combo.discountedPrice,
+        discount: combo.discount,
+        description: combo.description,
+        dishes: combo.dishes.map(dishRef => {
+            const dish = window.dishes.find(d => d.keyword === dishRef.keyword);
+            return dish ? {
+                name: dish.name,
+                image: dish.image,
+                count: dish.count,
+                price: dish.price
+            } : null;
+        }).filter(Boolean)
+    });
+    showNotification(`Комбо "${combo.name}" добавлено в корзину со скидкой ${combo.discount}%`);
+    return true;
+};
 
-  // ---------- render ----------
-  function render() {
-    const raw = loadRawCart();
-    const map = buildDishMap(raw);
+window.addCustomComboToCart = function(customCombo) {
+    // Создаем кастомное комбо
+    const totalPrice = customCombo.dishes.reduce((sum, dish) => sum + dish.price, 0);
+    const discount = customCombo.dishes.length >= 3 ? 25 : 0;
+    const discountedPrice = Math.round(totalPrice * (1 - discount / 100));
+    
+    // Добавляем как комбо
+    addToCart({
+        type: 'combo',
+        id: 'custom_' + Date.now(),
+        name: 'Собранный ланч',
+        price: totalPrice,
+        discountedPrice: discountedPrice,
+        discount: discount,
+        description: 'Ваш собранный ланч',
+        dishes: customCombo.dishes.map(dish => ({
+            name: dish.name,
+            image: dish.image,
+            count: dish.count,
+            price: dish.price,
+            category: dish.category
+        }))
+    });
+    showNotification(`Собранный ланч добавлен в корзину ${discount > 0 ? `со скидкой ${discount}%` : ''}`);
+    return true;
+};
 
-    cartItemsEl.innerHTML = "";
-
-    if (map.size === 0) {
-      cartEmptyEl.style.display = "block";
-      totalEl.textContent = "0₽";
-      return;
-    }
-
-    cartEmptyEl.style.display = "none";
-
-    let total = 0;
-
-    for (const [keyword, { dish, qty }] of map.entries()) {
-      total += dish.price * qty;
-
-      const card = document.createElement("div");
-      card.className = "cart-item-card";
-      card.innerHTML = `
-        <p class="cart-item-category">${categoryTitle(dish.category)}</p>
-        <img src="${dish.image}" alt="${dish.name}">
-        <p class="cart-item-name">${dish.name}</p>
-        <p class="cart-item-price">${dish.price}₽ ${qty > 1 ? `<span style="color:#666">× ${qty}</span>` : ""}</p>
-        <p class="cart-item-count">${dish.count}</p>
-        <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
-          <button class="cart-dec" data-key="${keyword}">−</button>
-          <button class="cart-inc" data-key="${keyword}">+</button>
-          <button class="cart-remove" data-key="${keyword}">Удалить</button>
-        </div>
-      `;
-      cartItemsEl.appendChild(card);
-    }
-
-    totalEl.textContent = `${total}₽`;
-  }
-
-  function categoryTitle(cat) {
-    const map = {
-      soup: "Суп",
-      starter: "Стартер",
-      main_dish: "Главное блюдо",
-      drink: "Напиток",
-      dessert: "Десерт"
-    };
-    return map[cat] || "";
-  }
-
-  // ---------- cart actions (только внутри корзины) ----------
-  // Уменьшаем/увеличиваем количество блюда в localStorage.cart, не трогая меню
-  function changeDishQty(keyword, delta) {
-    const raw = loadRawCart();
-
-    // Сначала пробуем найти item типа dish (если появится в будущем)
-    for (const item of raw) {
-      if (item?.type === "dish" && item.keyword === keyword) {
-        item.qty = (item.qty || 1) + delta;
-        if (item.qty <= 0) {
-          const idx = raw.indexOf(item);
-          raw.splice(idx, 1);
+// Основная функция добавления в корзину
+function addToCart(item) {
+    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    
+    if (item.type === 'dish') {
+        // Проверяем, есть ли уже такой товар
+        const existingIndex = cart.findIndex(cartItem => 
+            cartItem.type === 'dish' && cartItem.keyword === item.keyword
+        );
+        
+        if (existingIndex !== -1) {
+            // Увеличиваем количество
+            cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+        } else {
+            // Добавляем новый
+            item.quantity = 1;
+            cart.push(item);
         }
-        saveRawCart(raw);
-        return;
-      }
-    }
-
-    // Иначе работаем с кастомными ланчами (item.dishes)
-    if (delta < 0) {
-      // убрать 1 шт: удаляем первое вхождение keyword из любого combo.dishes
-      for (let i = 0; i < raw.length; i++) {
-        const item = raw[i];
-        if (!Array.isArray(item?.dishes)) continue;
-
-        const di = item.dishes.findIndex(d => d.keyword === keyword);
-        if (di !== -1) {
-          item.dishes.splice(di, 1);
-          if (item.dishes.length === 0) raw.splice(i, 1);
-          saveRawCart(raw);
-          return;
+    } else if (item.type === 'combo') {
+        // Для комбо тоже можем увеличивать количество, если одинаковое
+        const existingIndex = cart.findIndex(cartItem => 
+            cartItem.type === 'combo' && cartItem.id === item.id
+        );
+        
+        if (existingIndex !== -1) {
+            cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+        } else {
+            item.quantity = 1;
+            cart.push(item);
         }
-      }
+    }
+    
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCounter();
+    dispatchCartUpdate();
+    return true;
+}
+
+// Обновление счетчика в шапке
+function updateCartCounter() {
+    const counter = document.getElementById('cart-counter');
+    if (!counter) return;
+    
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    
+    if (totalItems > 0) {
+        counter.textContent = totalItems;
+        counter.style.display = 'inline-flex';
     } else {
-      // добавить 1 шт: добавим блюдо как отдельный item типа dish (чтобы не ломать комбо)
-      raw.push({ type: "dish", keyword, qty: 1 });
-      saveRawCart(raw);
-      return;
+        counter.style.display = 'none';
     }
-  }
+}
 
-  function removeDishAll(keyword) {
-    const raw = loadRawCart();
+// Уведомление
+function showNotification(message) {
+    // Создаем простое уведомление
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000;
+        font-family: "Work Sans", sans-serif;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 
-    // убрать item type dish
-    for (let i = raw.length - 1; i >= 0; i--) {
-      const item = raw[i];
+// Добавляем стили для анимации
+if (!document.querySelector('#cart-notification-styles')) {
+    const style = document.createElement('style');
+    style.id = 'cart-notification-styles';
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        #cart-counter {
+            display: none;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+            vertical-align: top;
+        }
+        
+        .cart-combo-item {
+            border: 2px solid #e3f2fd;
+            background-color: #f8fdff;
+        }
+        
+        .combo-dishes-list {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        
+        .combo-dish-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            padding: 5px;
+            background: white;
+            border-radius: 4px;
+        }
+        
+        .combo-dish-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .combo-discount-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+        
+        .discounted-price {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    `;
+    document.head.appendChild(style);
+}
 
-      if (item?.type === "dish" && item.keyword === keyword) {
-        raw.splice(i, 1);
-        continue;
-      }
-
-      if (Array.isArray(item?.dishes)) {
-        item.dishes = item.dishes.filter(d => d.keyword !== keyword);
-        if (item.dishes.length === 0) raw.splice(i, 1);
-      }
-
-      if (Array.isArray(item?.dishKeywords)) {
-        item.dishKeywords = item.dishKeywords.filter(k => k !== keyword);
-        if (item.dishKeywords.length === 0) raw.splice(i, 1);
-      }
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCounter();
+    
+    // Загружаем корзину на странице cart.html
+    if (window.location.pathname.includes('cart.html')) {
+        loadCartPage();
     }
-
-    saveRawCart(raw);
-  }
-
-  cartItemsEl.addEventListener("click", (e) => {
-    const inc = e.target.closest(".cart-inc");
-    const dec = e.target.closest(".cart-dec");
-    const rem = e.target.closest(".cart-remove");
-
-    if (inc) {
-      changeDishQty(inc.dataset.key, +1);
-      render();
-    }
-    if (dec) {
-      changeDishQty(dec.dataset.key, -1);
-      render();
-    }
-    if (rem) {
-      removeDishAll(rem.dataset.key);
-      render();
-    }
-  });
-
-  window.addComboToCart = function(combo) {
-  // combo.dishes = [{keyword: ...}, ...]
-  try {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (!Array.isArray(cart)) cart = [];
-
-    // Добавляем блюда комбо в корзину "по отдельности"
-    combo.dishes.forEach(d => {
-      cart.push({ type: 'dish', keyword: d.keyword, qty: 1 });
-    });
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`Комбо "${combo.name}" добавлено в корзину`);
-  } catch (e) {
-    console.error('addComboToCart error', e);
-  }
-};
-
-// customCombo.js может вызывать addCustomComboToCartFromKeywords(...)
-window.addCustomComboToCartFromKeywords = function(dishKeywords, totalPrice) {
-  try {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (!Array.isArray(cart)) cart = [];
-
-    dishKeywords.forEach(k => cart.push({ type: 'dish', keyword: k, qty: 1 }));
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Собранный ланч добавлен в корзину');
-  } catch (e) {
-    console.error('addCustomComboToCartFromKeywords error', e);
-  }
-};
-
-// если где-то вызывается addDishToCart(keyword)
-window.addDishToCart = function(keyword) {
-  try {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (!Array.isArray(cart)) cart = [];
-
-    cart.push({ type: 'dish', keyword, qty: 1 });
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Блюдо добавлено в корзину');
-  } catch (e) {
-    console.error('addDishToCart error', e);
-  }
-};
-
-  render();
 });
+
+// Загрузка страницы корзины
+function loadCartPage() {
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartEmptyEl = document.getElementById('cart-empty');
+    const totalEl = document.getElementById('summary-total');
+    
+    if (!cartItemsEl || !cartEmptyEl || !totalEl) return;
+    
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    
+    if (cart.length === 0) {
+        cartItemsEl.innerHTML = '';
+        cartEmptyEl.style.display = 'block';
+        totalEl.textContent = '0₽';
+        return;
+    }
+    
+    cartEmptyEl.style.display = 'none';
+    
+    let itemsHTML = '';
+    let total = 0;
+    
+    cart.forEach(item => {
+        let itemTotal, itemPriceDisplay;
+        
+        if (item.type === 'combo') {
+            // Для комбо используем цену со скидкой
+            itemTotal = (item.discountedPrice || item.price) * (item.quantity || 1);
+            itemPriceDisplay = `
+                <span class="original-price">${item.price}₽</span>
+                <span class="discounted-price">${item.discountedPrice || item.price}₽</span>
+                <span class="combo-discount-badge">-${item.discount || 0}%</span>
+            `;
+            
+            itemsHTML += `
+                <div class="cart-item-card cart-combo-item">
+                    <p class="cart-item-category">КОМБО</p>
+                    <div style="font-weight: 600; color: #2a2f37; margin: 5px 0;">${item.name}</div>
+                    <p class="cart-item-price">${itemPriceDisplay}</p>
+                    <div class="combo-dishes-list">
+                        <strong>Состав:</strong>
+                        ${item.dishes ? item.dishes.map(dish => `
+                            <div class="combo-dish-item">
+                                ${dish.image ? `<img src="${dish.image}" alt="${dish.name}">` : ''}
+                                <span>${dish.name} - ${dish.count}</span>
+                            </div>
+                        `).join('') : ''}
+                    </div>
+                    <p class="cart-item-count">Количество: ${item.quantity || 1}</p>
+                    <p class="cart-item-total">Итого: ${itemTotal}₽</p>
+                    <button class="cart-item-remove" data-id="${item.id}" data-type="combo">Удалить</button>
+                </div>
+            `;
+        } else {
+            // Для обычных блюд
+            itemTotal = item.price * (item.quantity || 1);
+            total += itemTotal;
+            
+            itemsHTML += `
+                <div class="cart-item-card">
+                    <p class="cart-item-category">${getCategoryName(item.category)}</p>
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/150?text=Нет+изображения'">
+                    <p class="cart-item-name">${item.name}</p>
+                    <p class="cart-item-price">${item.price}₽</p>
+                    <p class="cart-item-count">${item.count}</p>
+                    <div class="cart-item-quantity">
+                        <button class="cart-qty-btn dec" data-keyword="${item.keyword}">−</button>
+                        <span class="cart-qty-display">${item.quantity || 1}</span>
+                        <button class="cart-qty-btn inc" data-keyword="${item.keyword}">+</button>
+                    </div>
+                    <p class="cart-item-total">Итого: ${itemTotal}₽</p>
+                    <button class="cart-item-remove" data-keyword="${item.keyword}" data-type="dish">Удалить</button>
+                </div>
+            `;
+        }
+        
+        total += itemTotal;
+    });
+    
+    cartItemsEl.innerHTML = itemsHTML;
+    totalEl.textContent = `${total}₽`;
+    
+    // Добавляем обработчики событий
+    addCartEventListeners();
+}
+
+function getCategoryName(category) {
+    const names = {
+        'soup': 'Суп',
+        'starter': 'Стартер', 
+        'main_dish': 'Основное блюдо',
+        'drink': 'Напиток',
+        'dessert': 'Десерт'
+    };
+    return names[category] || 'Блюдо';
+}
+
+function addCartEventListeners() {
+    // Увеличение количества для блюд
+    document.querySelectorAll('.cart-qty-btn.inc').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const keyword = this.dataset.keyword;
+            updateCartItemQuantity(keyword, 1, 'dish');
+        });
+    });
+    
+    // Уменьшение количества для блюд
+    document.querySelectorAll('.cart-qty-btn.dec').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const keyword = this.dataset.keyword;
+            updateCartItemQuantity(keyword, -1, 'dish');
+        });
+    });
+    
+    // Удаление
+    document.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const type = this.dataset.type;
+            if (type === 'combo') {
+                const id = this.dataset.id;
+                removeFromCart(id, 'combo');
+            } else {
+                const keyword = this.dataset.keyword;
+                removeFromCart(keyword, 'dish');
+            }
+        });
+    });
+}
+
+function updateCartItemQuantity(identifier, change, type) {
+    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    let index;
+    
+    if (type === 'dish') {
+        index = cart.findIndex(item => item.type === 'dish' && item.keyword === identifier);
+    } else if (type === 'combo') {
+        index = cart.findIndex(item => item.type === 'combo' && item.id === identifier);
+    }
+    
+    if (index !== -1) {
+        cart[index].quantity = (cart[index].quantity || 1) + change;
+        
+        if (cart[index].quantity <= 0) {
+            cart.splice(index, 1);
+        }
+        
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        updateCartCounter();
+        loadCartPage(); // Перезагружаем отображение
+        dispatchCartUpdate();
+    }
+}
+
+function removeFromCart(identifier, type) {
+    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    
+    if (type === 'dish') {
+        cart = cart.filter(item => !(item.type === 'dish' && item.keyword === identifier));
+    } else if (type === 'combo') {
+        cart = cart.filter(item => !(item.type === 'combo' && item.id === identifier));
+    }
+    
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCounter();
+    loadCartPage();
+    dispatchCartUpdate();
+}
+
+// Отправка события об обновлении корзины
+function dispatchCartUpdate() {
+    window.dispatchEvent(new CustomEvent('cartUpdated'));
+    window.dispatchEvent(new Event('storage'));
+}
+
+// Экспортируем для других скриптов
+window.getCartTotal = function() {
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    return cart.reduce((total, item) => {
+        if (item.type === 'combo') {
+            return total + (item.discountedPrice || item.price) * (item.quantity || 1);
+        } else {
+            return total + item.price * (item.quantity || 1);
+        }
+    }, 0);
+};
+
+window.getCartItemsCount = function() {
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    return cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+};

@@ -17,6 +17,7 @@ function displayCombos() {
     });
 }
 
+
 function createComboElement(combo) {
     const comboDiv = document.createElement('div');
     comboDiv.className = 'combo-block';
@@ -53,18 +54,36 @@ function createComboElement(combo) {
                 </div>
                 <div class="combo-discount-badge">-${combo.discount}%</div>
             </div>
-            <button class="combo-select-btn" data-combo-id="${combo.id}">
-                Выбрать этот комбо
+            <button class="combo-select-btn" onclick="addComboToCartFromPage('${combo.id}')">
+                Добавить в корзину за ${combo.discountedPrice}₽
             </button>
         </div>
     `;
     
-    // Добавляем обработчик для кнопки выбора
-    const selectBtn = comboDiv.querySelector('.combo-select-btn');
-    selectBtn.addEventListener('click', function() {
-        selectCombo(combo.id);
+    // Оставляем возможность выбора комбо
+    comboDiv.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('combo-select-btn')) {
+            selectCombo(combo.id);
+        }
     });
     
     return comboDiv;
 }
 
+// Глобальная функция для добавления комбо
+window.addComboToCartFromPage = function(comboId) {
+    const combo = window.combos.find(c => c.id === comboId);
+    if (combo && typeof window.addComboToCart === 'function') {
+        window.addComboToCart(combo);
+    }
+};
+
+function selectCombo(comboId) {
+    const combo = window.combos.find(c => c.id === comboId);
+    if (combo && typeof window.addComboToCart === 'function') {
+        window.addComboToCart(combo);
+    } else {
+        // Если функция не доступна, показываем сообщение
+        alert(`Комбо "${combo.name}" выбрано! Для добавления в корзину обновите страницу.`);
+    }
+}

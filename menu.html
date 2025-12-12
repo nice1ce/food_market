@@ -18,7 +18,10 @@
                 <div><a href="menu.html">Меню</a></div>
                 <div><a href="combo.html">Комбо-ланчи</a></div>
                 <div><a href="custom-combo.html">Собрать ланч</a></div>
-                <div><a href="cart.html">Корзина</a></div>
+                <div>
+                    <a href="cart.html">Корзина</a>
+                    <span id="cart-counter" class="cart-counter"></span>
+                </div>
                 <div><a href="">Отзывы</a></div>
                 <div><a href="auth.html">Войти</a></div>
             </nav>
@@ -44,107 +47,27 @@
             <h2>Выберите десерт</h2>
             <section class="dessert_section"></section>
 
-            <!-- Форма заказа -->
-            <h2 style="text-align: center;">Сделать заказ</h2>
-            <form id="order-form" action="" method="post" class="form_menu">
-                <div class="first_column">
-                    <p style="font-size: 1.2em;">Ваш заказ</p>
-                    
-                    <label for="soup_select"><p>Суп</p></label>
-                    <select id="soup_select" class="form_select">
-                        <option disabled selected>Выберите суп</option>
-                        <option>Мясной борщ</option>
-                        <option>Солянка</option>
-                        <option>Уха царская</option>
-                        <option>Сливочный суп с лососем</option>
-                        <option>Грибной крем-суп</option>
-                        <option>Томатный суп с базиликом</option>
-                    </select>
+            <!-- Кнопка перехода в корзину -->
+            <div class="cart-button-container" style="text-align: center; margin: 40px 0;">
+                <a href="cart.html" class="cart-button" style="
+                    display: inline-block;
+                    padding: 15px 40px;
+                    background-color: #28a745;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 10px;
+                    font-size: 1.2em;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+                ">
+                    Перейти в корзину
+                </a>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
+                    В корзине: <span id="cart-items-count">0</span> товаров на сумму <span id="cart-total-price">0₽</span>
+                </p>
+            </div>
 
-                    <label for="starter_select"><p>Стартер</p></label>
-                    <select id="starter_select" class="form_select">
-                        <option disabled selected>Выберите стартер</option>
-                        <option>Салат Цезарь</option>
-                        <option>Коктейль из креветок</option>
-                        <option>Греческий салат</option>
-                        <option>Салат Капрезе</option>
-                        <option>Брускетта с овощами</option>
-                        <option>Тарелка с хумусом</option>
-                    </select>
-
-                    <label for="main_dish_select"><p>Главное блюдо</p></label>
-                    <select id="main_dish_select" class="form_select">
-                        <option disabled selected>Выберите главное блюдо</option>
-                        <option>Жареный картофель с грибами</option>
-                        <option>Макароны по-флотски</option>
-                        <option>Рис с курицей терияки</option>
-                        <option>Гриль-лосось с овощами</option>
-                        <option>Рыбные котлеты с пюре</option>
-                        <option>Овощное рагу</option>
-                    </select>
-
-                    <label for="drink_select"><p>Напиток</p></label>
-                    <select id="drink_select" class="form_select">
-                        <option disabled selected>Выберите ваш напиток</option>
-                        <option>Ягодный морс</option>
-                        <option>Апельсиновый сок</option>
-                        <option>Яблочный сок</option>
-                        <option>Зеленый чай</option>
-                        <option>Черный чай с лимоном</option>
-                        <option>Кофе латте</option>
-                    </select>
-
-                    <label for="dessert_select"><p>Десерт</p></label>
-                    <select id="dessert_select" class="form_select">
-                        <option disabled selected>Выберите десерт</option>
-                        <option>Тирамису</option>
-                        <option>Шоколадный торт</option>
-                        <option>Чизкейк Нью-Йорк</option>
-                        <option>Фруктовый салат</option>
-                        <option>Мороженое пломбир</option>
-                        <option>Макаруны ассорти</option>
-                    </select>
-                        
-                    <label for="order_comment"><p>Комментарий к заказу</p></label>
-                    <textarea placeholder="Заезд во двор задней части дома, домофон 383, этаж 10" class="order_comment" id="order_comment"></textarea>
-                </div>
-                
-                <div class="second_column">
-                    <p style="font-size: 1.2em;">Ваши данные</p>
-
-                    <label for="name_text"><p>Имя</p></label>
-                    <textarea placeholder="Иван" class="name_text texta" id="name_text" style="resize: none; font-size: 1.4em;"></textarea>
-
-                    <label for="email_but"><p>Email</p></label>
-                    <input type="email" placeholder="example@mail.ru" class="email_but" id="email_but"> <br> 
-                    <input type="checkbox" id="add">
-                    <label for="add">Получать информацию об акциях и скидках</label>
-
-                    <label for="phone_but"><p>Номер телефона</p></label>
-                    <input type="tel" id="phone_but" class="phone_but" placeholder="+7(000)000-00-00">
-
-                    <label for="address"><p>Адрес</p></label>
-                    <input type="text" id="address" class="address" placeholder="Тверская улица, дом 34, кв. 153, подъезд 2">
-                    <p style="font-style: italic;">Доставка осуществляется только по Москве</p>
-
-                    <p>Время доставки:</p>
-                    <p><input type="radio" name="time_choice" id="fast">
-                    <label for="fast">Как можно скорее</label></p>
-                    
-                    <p><input type="radio" name="time_choice" id="exact_time">
-                    <label for="exact_time">В указанное время</label></p>
-
-                    <label for="deliv_time">Укажите время доставки</label>
-                    <p><input type="time" id="deliv_time" class="deliv_time"></p>
-
-                    <p style="font-style: italic;">Доступное время доставки с 7:00 до 23:00</p>
-                    
-                    <span id="form_buttoms">
-                        <input type="reset" value="Сбросить" class="last_buttoms">
-                        <input type="submit" value="Отправить" class="last_buttoms" id="submit-order">
-                    </span>
-                </div>
-            </form>
         </main>
 
         <footer class="footer">
@@ -167,7 +90,47 @@
         <script src="dishes.js"></script>
         <script src="cart.js"></script>
         <script src="displayDishes.js"></script>
-        <script src="orderManager.js"></script>
+        <!-- УДАЛЕНО: orderManager.js больше не нужен -->
+        <!-- <script src="orderManager.js"></script> -->
         <script src="orderValidator.js"></script>
+        
+        <script>
+            // Обновляем информацию о корзине внизу страницы
+            function updateCartInfo() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                const totalPrice = cart.reduce((sum, item) => {
+                    if (item.type === 'combo') {
+                        return sum + (item.discountedPrice || item.price) * (item.quantity || 1);
+                    } else {
+                        return sum + item.price * (item.quantity || 1);
+                    }
+                }, 0);
+                
+                document.getElementById('cart-items-count').textContent = totalItems;
+                document.getElementById('cart-total-price').textContent = totalPrice + '₽';
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                updateCartInfo();
+                
+                // Обновляем при изменении корзины
+                window.addEventListener('storage', function(e) {
+                    if (e.key === 'cart') {
+                        updateCartInfo();
+                    }
+                });
+                
+                // Обновляем при клике на кнопки добавления в корзину
+                document.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('add_buttom') || 
+                        e.target.classList.contains('combo-select-btn') ||
+                        e.target.classList.contains('add-to-cart-btn')) {
+                        // Ждем немного, чтобы корзина успела обновиться
+                        setTimeout(updateCartInfo, 100);
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

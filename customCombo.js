@@ -157,6 +157,7 @@ function updateSummary() {
     // Обновляем список выбранных блюд
     let summaryHTML = '';
     let subtotal = 0;
+    let dishesArray = [];
     
     Object.entries(selectedDishes).forEach(([category, dish]) => {
         if (dish) {
@@ -167,12 +168,13 @@ function updateSummary() {
                 </div>
             `;
             subtotal += dish.price;
+            dishesArray.push(dish);
         }
     });
     
     summaryList.innerHTML = summaryHTML;
     
-    // Рассчитываем скидку 25%
+    // Рассчитываем скидку 25% (если выбрано 3 и более блюда)
     const discount = selectedCount >= 3 ? Math.round(subtotal * 0.25) : 0;
     const total = subtotal - discount;
     
@@ -183,6 +185,14 @@ function updateSummary() {
     
     // Включаем/выключаем кнопку
     addToCartBtn.disabled = selectedCount < 2;
+    
+    // Сохраняем выбранные блюда для добавления в корзину
+    window.currentCustomCombo = {
+        dishes: dishesArray,
+        subtotal: subtotal,
+        discount: discount,
+        total: total
+    };
 }
 
 function addComboToCart() {
@@ -193,50 +203,34 @@ function addComboToCart() {
         return;
     }
     
-    // Рассчитываем итоговую цену со скидкой
-    let subtotal = 0;
-    Object.values(selectedDishes).forEach(dish => {
-        if (dish) subtotal += dish.price;
-    });
+    const selectedDishesArray = Object.values(selectedDishes).filter(dish => dish !== null);
     
-    const discount = selectedCount >= 3 ? Math.round(subtotal * 0.25) : 0;
-    const total = subtotal - discount;
-    
-    // Сохраняем в localStorage (в реальном приложении - отправляем на сервер)
-    const combo = {
-        id: 'custom-' + Date.now(),
-        name: 'Собранный ланч',
-        dishes: Object.values(selectedDishes).filter(dish => dish !== null),
-        subtotal: subtotal,
-        discount: discount,
-        total: total,
-        discountPercentage: selectedCount >= 3 ? 25 : 0
-    };
-    
-    // Сохраняем в localStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(combo);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // Показываем уведомление об успехе
-    showNotification(`Ланч добавлен в корзину! Стоимость: ${total}₽ (скидка ${discount}₽)`);
-    
-    // Очищаем выбор
-    selectedDishes = {
-        soup: null,
-        starter: null,
-        main_dish: null,
-        drink: null,
-        dessert: null
-    };
-    
-    // Сбрасываем выделение
-    document.querySelectorAll('.combo-dish-card.selected').forEach(card => {
-        card.classList.remove('selected');
-    });
-    
-    // Обновляем сводку
-    updateSummary();
+    // Используем глобальную функцию
+    if (typeof window.addCustomComboToCart === 'function') {
+        window.addCustomComboToCart({
+            dishes: selectedDishesArray
+        });
+        
+        // Очищаем выбор
+        selectedDishes = {
+            soup: null,
+            starter: null,
+            main_dish: null,
+            drink: null,
+            dessert: null
+        };
+        
+        // Сбрасываем выделение
+        document.querySelectorAll('.combo-dish-card.selected').forEach(card => {
+            card.classList.remove('selected');
+        });
+        
+        // Обновляем сводку
+        updateSummary();
+        
+        // Показываем уведомление
+        showNotification('Собранный ланч добавлен в корзину!');
+    }
 }
 
 function showNotification(message) {

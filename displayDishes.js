@@ -145,17 +145,46 @@ function createDishElement(dish) {
         <p class="price">${dish.price}₽</p>
         <p class="name">${dish.name}</p>
         <p class="weight">${dish.count}</p>
-        <button class="add_buttom">Добавить</button>
+        <button class="add_buttom" onclick="addDishToCartFromMenu(event, '${dish.keyword}')">Добавить в корзину</button>
     `;
     
-    const addButton = dishDiv.querySelector('.add_buttom');
-    addButton.addEventListener('click', function() {
-        addDishToOrder(dish);
-        highlightSelectedDish(dish.category, dish.keyword);
-    });
+    // УДАЛЕНО: Обработка кликов на карточке - убираем черную обводку
+    // dishDiv.addEventListener('click', function(e) {
+    //     if (!e.target.classList.contains('add_buttom')) {
+    //         addDishToOrder(dish);
+    //         highlightSelectedDish(dish.category, dish.keyword);
+    //     }
+    // });
     
     return dishDiv;
 }
+
+window.addDishToCartFromMenu = function(event, keyword) {
+    event.stopPropagation();
+    const dish = window.dishes.find(d => d.keyword === keyword);
+    if (dish && typeof window.addDishToCart === 'function') {
+        window.addDishToCart(dish);
+        // Показываем временную подсветку при добавлении
+        const dishElement = document.querySelector(`[data-dish="${keyword}"]`);
+        if (dishElement) {
+            dishElement.style.border = '2px solid #28a745';
+            dishElement.style.transition = 'border 0.5s ease';
+            setTimeout(() => {
+                dishElement.style.border = '2px solid white';
+            }, 500);
+        }
+    }
+};
+
+// Новая функция для добавления комбо через меню
+window.addComboFromMenu = function(comboId) {
+    if (typeof window.combos !== 'undefined') {
+        const combo = window.combos.find(c => c.id === comboId);
+        if (combo && typeof window.addComboToCart === 'function') {
+            window.addComboToCart(combo);
+        }
+    }
+};
 
 function getCategoryClass(category) {
     const classMap = {
@@ -166,22 +195,4 @@ function getCategoryClass(category) {
         'dessert': 'dessert_block'
     };
     return classMap[category] || '';
-}
-
-function addDishToOrder(dish) {
-    if (typeof window.addDishToOrder === 'function') {
-        window.addDishToOrder(dish);
-    }
-}
-
-function highlightSelectedDish(category, dishKeyword) {
-    if (typeof window.highlightSelectedDish === 'function') {
-        window.highlightSelectedDish(category, dishKeyword);
-    }
-}
-
-function updateCategoryDisplay(category, sectionClass) {
-    if (typeof window.updateCategoryDisplay === 'function') {
-        window.updateCategoryDisplay(category, sectionClass);
-    }
 }
