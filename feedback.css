@@ -37,8 +37,9 @@ body::after{
   text-decoration: none;
 }
 
-.main-menu div{
-  width: 200px;
+.main-menu div {
+    width: auto; /* Изменяем с фиксированной ширины */
+    padding: 0 15px; /* Добавляем отступы */
 }
 
 .profile{
