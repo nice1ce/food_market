@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фуд-маркет — О компании</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2a2f37;
+            --secondary-color: #28a745;
+            --accent-color: #ffc107;
+        }
+        
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-brand span {
+            color: var(--secondary-color);
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(42, 47, 55, 0.85), rgba(42, 47, 55, 0.9)),
+                        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 60px;
+        }
+        
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .hero-section .lead {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(40, 167, 69, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary-color);
+        }
+        
+        .feature-card:hover .feature-icon {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #3a3f47 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 60px;
+            margin: 80px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-form {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 80px 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-section {
+                padding: 40px 20px;
+                text-align: center;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-egg-fried me-2"></i>
+                <span>ФУД</span>-маркет
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Преимущества</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cta">Собрать ланч</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-success ms-2" href="menu.html">Меню</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>Вкусные бизнес-ланчи с доставкой в офис</h1>
+                    <p class="lead">Свежие, питательные и сбалансированные обеды для продуктивного рабочего дня. Доставляем вовремя, сохраняя вкус и качество.</p>
+                    <div class="mt-4">
+                        <a href="#cta" class="btn btn-primary-custom btn-lg me-3">
+                            <i class="bi bi-play-circle me-2"></i>Собрать ланч
+                        </a>
+                        <a href="menu.html" class="btn btn-outline-light btn-lg">
+                            Посмотреть меню
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="mt-4 mt-lg-0">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" 
+                             alt="Вкусный бизнес-ланч" 
+                             class="img-fluid rounded shadow-lg"
+                             style="max-height: 400px; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О компании -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">О компании</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="text-center mb-5">
+                        <p class="lead text-muted">
+                            <strong>ФУД-маркет</strong> — это команда профессионалов, которая с 2015 года обеспечивает офисных работников вкусными и полезными бизнес-ланчами. Мы понимаем, как важно питаться правильно даже в условиях плотного рабочего графика.
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <div class="feature-icon">
+                                    <i class="bi bi-calendar-check"></i>
+                                </div>
+                                <h5>7 лет опыта</h5>
+                                <p class="text-muted">Более 7 лет доставляем счастье в коробочках</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <div class="feature-icon">
+                                    <i class="bi bi-truck"></i>
+                                </div>
+                                <h5>2500+ доставок</h5>
+                                <p class="text-muted">Ежедневно радуем наших клиентов</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <div class="feature-icon">
+                                    <i class="bi bi-emoji-smile"></i>
+                                </div>
+                                <h5>98% довольных</h5>
+                                <p class="text-muted">Клиентов рекомендуют нас друзьям</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Наши преимущества</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Быстрая доставка</h4>
+                        <p class="text-muted text-center">Доставляем в течение 45 минут с момента заказа. Мы ценим ваше время и всегда приезжаем вовремя.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Качество и свежесть</h4>
+                        <p class="text-muted text-center">Все блюда готовятся ежедневно из свежих продуктов. Мы сотрудничаем только с проверенными поставщиками.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-currency-exchange"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Выгодные цены</h4>
+                        <p class="text-muted text-center">Система скидок до 30% на комбо-ланчи. Корпоративным клиентам — специальные условия.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2>Собери свой идеальный ланч!</h2>
+                    <p class="lead mb-4">Выберите суп, салат, основное блюдо, напиток и десерт. Получите скидку 25% при заказе от 3 позиций.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="custom-combo.html" class="btn btn-warning btn-lg">
+                            <i class="bi bi-gear-wide-connected me-2"></i>Собрать ланч
+                        </a>
+                        <a href="combo.html" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-lightning me-2"></i>Готовые комбо
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center mt-4 mt-lg-0">
+                    <div class="bg-white rounded p-3 d-inline-block">
+                        <h3 class="text-success mb-0">25%</h3>
+                        <p class="text-muted mb-0">скидка на сборный ланч</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма обратной связи и контакты -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Обратная связь</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="contact-form">
+                        <h4 class="mb-4">Напишите нам</h4>
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Ваше имя</label>
+                                <input type="text" class="form-control" id="name" placeholder="Иван Иванов" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="example@mail.ru" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Телефон</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="+7 (999) 999-99-99">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Сообщение</label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Ваш вопрос или предложение..."></textarea>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="agree">
+                                <label class="form-check-label" for="agree">
+                                    Согласен на обработку персональных данных
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">
+                                <i class="bi bi-send me-2"></i>Отправить сообщение
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ms-lg-5 mt-5 mt-lg-0">
+                        <h4 class="mb-4">Контакты</h4>
+                        <div class="mb-4">
+                            <h5><i class="bi bi-geo-alt text-success me-2"></i>Адрес</h5>
+                            <p class="text-muted">г. Москва, Тверская улица, дом 34</p>
+                        </div>
+                        <div class="mb-4">
+                            <h5><i class="bi bi-telephone text-success me-2"></i>Телефон</h5>
+                            <p class="text-muted">+7 (000) 000-00-00</p>
+                        </div>
+                        <div class="mb-4">
+                            <h5><i class="bi bi-envelope text-success me-2"></i>Email</h5>
+                            <p class="text-muted">food_market_for_you@mail.ru</p>
+                        </div>
+                        <div class="mb-4">
+                            <h5><i class="bi bi-clock text-success me-2"></i>Время работы</h5>
+                            <p class="text-muted">Пн-Пт: 9:00 - 21:00<br>Сб: 10:00 - 18:00<br>Вс: выходной</p>
+                        </div>
+                        <div class="mt-5">
+                            <h5>Мы в социальных сетях</h5>
+                            <div class="d-flex gap-3 mt-3">
+                                <a href="#" class="btn btn-outline-primary">
+                                    <i class="bi bi-telegram"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-danger">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                                <!--<a href="#" class="btn btn-outline-primary">
+                                    <i class="bi bi-vk"></i>
+                                </a>-->
+                                <a href="#" class="btn btn-outline-success">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5><i class="bi bi-egg-fried me-2"></i>ФУД-маркет</h5>
+                    <p class="mt-3">Вкусные бизнес-ланчи с доставкой в офис. Заботимся о вашем питании и продуктивности.</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Быстрые ссылки</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="menu.html" class="text-white text-decoration-none">Меню</a></li>
+                        <li class="mb-2"><a href="combo.html" class="text-white text-decoration-none">Комбо-ланчи</a></li>
+                        <li class="mb-2"><a href="custom-combo.html" class="text-white text-decoration-none">Собрать ланч</a></li>
+                        <li class="mb-2"><a href="cart.html" class="text-white text-decoration-none">Корзина</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Контакты</h5>
+                    <p class="mb-1"><i class="bi bi-telephone me-2"></i>+7 (000) 000-00-00</p>
+                    <p class="mb-1"><i class="bi bi-envelope me-2"></i>food_market_for_you@mail.ru</p>
+                    <p><i class="bi bi-geo-alt me-2"></i>Москва, Тверская ул., 34</p>
+                </div>
+            </div>
+            <hr class="bg-light my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2024 ФУД-маркет. Все права защищены.</p>
+                <p class="mb-0">
+                    <a href="#" class="text-white text-decoration-none me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none">Пользовательское соглашение</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Кастомный JS для формы -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработка формы
+            const contactForm = document.querySelector('form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+                    
+                    if (!name || !email || !message) {
+                        alert('Пожалуйста, заполните все обязательные поля');
+                        return;
+                    }
+                    
+                    // Здесь обычно отправка на сервер
+                    alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+                    contactForm.reset();
+                });
+            }
+            
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#') && targetId !== '#') {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

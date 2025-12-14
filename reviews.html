@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Фуд-маркет — Отзывы</title>
+    <link rel="stylesheet" href="style.css">
+    <link media="print" rel="stylesheet" href="print.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Стили для отзывов */
+        .reviews-section {
+            margin: 40px 15%;
+            padding: 30px 0;
+        }
+        
+        .reviews-title {
+            text-align: center;
+            color: #2a2f37;
+            margin-bottom: 10px;
+        }
+        
+        .rating-summary {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+        
+        .rating-summary span {
+            font-weight: 700;
+            color: #2a2f37;
+            font-size: 1.3em;
+        }
+        
+        .review {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0f0f0;
+            transition: transform 0.3s ease;
+        }
+        
+        .review:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .review-author {
+            font-weight: 700;
+            color: #2a2f37;
+            font-size: 1.2em;
+        }
+        
+        .review-date {
+            color: #888;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        .stars {
+            color: #ffc107;
+            font-size: 1.5em;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .review-text {
+            line-height: 1.6;
+            color: #444;
+            font-size: 1.1em;
+        }
+        
+        .review-text p {
+            margin: 0;
+        }
+        
+        .add-review-btn-container {
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+        
+        .add-review-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #2a2f37;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #2a2f37;
+            cursor: pointer;
+        }
+        
+        .add-review-btn:hover {
+            background-color: white;
+            color: #2a2f37;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Стили для формы отзыва (скрыта по умолчанию) */
+        .review-form {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #eaeaea;
+            display: none;
+        }
+        
+        .review-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2a2f37;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: "Work Sans", sans-serif;
+            font-size: 1em;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #2a2f37;
+            box-shadow: 0 0 0 2px rgba(42, 47, 55, 0.2);
+        }
+        
+        .rating-stars-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .star-input {
+            font-size: 2em;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.2s ease;
+        }
+        
+        .star-input:hover,
+        .star-input.active {
+            color: #ffc107;
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-cancel {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 800px) {
+            .reviews-section {
+                margin: 30px 5%;
+            }
+            
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .review-date {
+                align-self: flex-end;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .reviews-section {
+                margin: 20px 3%;
+            }
+            
+            .review {
+                padding: 20px;
+            }
+            
+            .add-review-btn {
+                padding: 12px 30px;
+                font-size: 1.1em;
+            }
+            
+            .form-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header clearfix">
+        <nav class="main-menu">
+            <div><a href="index.html">Главная</a></div>
+            <div><a href="menu.html">Меню</a></div>
+            <div><a href="combo.html">Комбо-ланчи</a></div>
+            <div><a href="custom-combo.html">Собрать ланч</a></div>
+            <div>
+                <a href="cart.html">Корзина</a>
+                <span id="cart-counter" class="cart-counter"></span>
+            </div>
+            <div><a href="orders.html">Заказы</a></div>
+            <div><a href="reviews.html" class="active">Отзывы</a></div>
+            <div><a href="auth.html">Войти</a></div>
+        </nav>
+    </header>
+    
+    <main class="reviews-section">
+        <h1 class="reviews-title">Отзывы наших клиентов</h1>
+        
+        <div class="rating-summary">
+            Средняя оценка: <span>4.7</span> из 5 звезд на основании 3 отзывов
+        </div>
+        
+        <!-- Отзыв 1: 5 звезд -->
+        <div class="review">
+            <div class="review-header">
+                <div class="review-author">Анна Сергеева</div>
+                <div class="review-date">15.10.2024 в 14:30</div>
+            </div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">
+                <p>Заказываю бизнес-ланчи в Фуд-маркет уже более полугода и очень довольна! Особенно нравится комбо "Классический" - борщ просто как у бабушки, а тирамису нереально вкусный. Доставка всегда вовремя, даже раньше обещанного времени. Курьеры вежливые, блюда приезжают теплыми в герметичной упаковке. Цены вполне адекватные для такого качества. Рекомендую всем коллегам в офисе!</p>
+            </div>
+        </div>
+        
+        <!-- Отзыв 2: 5 звезд -->
+        <div class="review">
+            <div class="review-header">
+                <div class="review-author">Дмитрий Иванов</div>
+                <div class="review-date">10.10.2024 в 18:45</div>
+            </div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">
+                <p>Отличный сервис! Как фрилансеру, мне важно питаться полноценно, но не тратить время на готовку. Фуд-маркет стал моим спасением. Особенно нравится возможность собрать свой ланч - выбираю рыбный суп, греческий салат и лосось на гриле. Порции сытные, ингредиенты свежие. Заказываю 3-4 раза в неделю и пока ни разу не разочаровался. Спасибо за качество и оперативность!</p>
+            </div>
+        </div>
+        
+        <!-- Отзыв 3: 4 звезды -->
+        <div class="review">
+            <div class="review-header">
+                <div class="review-author">Мария Петрова</div>
+                <div class="review-date">05.10.2024 в 12:15</div>
+            </div>
+            <div class="stars">★★★★☆</div>
+            <div class="review-text">
+                <p>В целом очень хороший сервис. Заказывали ланчи для всего отдела (8 человек) - все остались довольны. Блюда вкусные, особенно понравился вегетарианский комбо. Единственное пожелание - хотелось бы больше опций для вегетарианцев в основном меню. Также один раз была небольшая задержка доставки на 15 минут, но курьер заранее позвонил и предупредил. Буду заказывать еще, надеюсь на расширение меню!</p>
+            </div>
+        </div>
+        
+        <!-- Кнопка добавления отзыва -->
+        <div class="add-review-btn-container">
+            <button class="add-review-btn" id="add-review-btn">
+                ✍️ Добавить свой отзыв
+            </button>
+        </div>
+        
+        <!-- Форма для добавления отзыва (скрыта по умолчанию) -->
+        <div class="review-form" id="review-form">
+            <h2 style="margin-top: 0; color: #2a2f37;">Оставить отзыв</h2>
+            
+            <div class="form-group">
+                <label for="review-name">Ваше имя:</label>
+                <input type="text" id="review-name" class="form-control" placeholder="Как к вам обращаться?">
+            </div>
+            
+            <div class="form-group">
+                <label>Ваша оценка:</label>
+                <div class="rating-stars-input" id="rating-stars">
+                    <span class="star-input" data-rating="1">☆</span>
+                    <span class="star-input" data-rating="2">☆</span>
+                    <span class="star-input" data-rating="3">☆</span>
+                    <span class="star-input" data-rating="4">☆</span>
+                    <span class="star-input" data-rating="5">☆</span>
+                </div>
+                <input type="hidden" id="rating-value" value="0">
+            </div>
+            
+            <div class="form-group">
+                <label for="review-text">Текст отзыва:</label>
+                <textarea id="review-text" class="form-control" rows="5" placeholder="Поделитесь вашим опытом..."></textarea>
+            </div>
+            
+            <div class="form-buttons">
+                <button type="button" class="btn-cancel" id="cancel-review">Отмена</button>
+                <button type="button" class="btn-submit" id="submit-review">Отправить отзыв</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p style="margin: 0;">
+            <a href="" title="Находится в разработке">Политика конфиденциальности</a>
+            <a href="" title="Будут сделаны(наверное)">Cookies</a>
+            <a href="feedback.html" title="Напиши нам">Обратная связь</a>
+        </p>
+        Контактная информация: 
+        Телефон: +7(000)000-00-00;
+        Почта: food_market_for_you@mail.ru
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы
+            const addReviewBtn = document.getElementById('add-review-btn');
+            const reviewForm = document.getElementById('review-form');
+            const cancelReviewBtn = document.getElementById('cancel-review');
+            const submitReviewBtn = document.getElementById('submit-review');
+            const ratingStars = document.getElementById('rating-stars');
+            const ratingValue = document.getElementById('rating-value');
+            const starInputs = document.querySelectorAll('.star-input');
+            
+            // Показ/скрытие формы
+            addReviewBtn.addEventListener('click', function() {
+                reviewForm.classList.add('active');
+                addReviewBtn.style.display = 'none';
+                window.scrollTo({
+                    top: reviewForm.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+            
+            cancelReviewBtn.addEventListener('click', function() {
+                reviewForm.classList.remove('active');
+                addReviewBtn.style.display = 'inline-block';
+                resetForm();
+            });
+            
+            // Выбор рейтинга
+            starInputs.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    ratingValue.value = rating;
+                    
+                    // Обновляем отображение звезд
+                    starInputs.forEach((s, index) => {
+                        if (index < rating) {
+                            s.textContent = '★';
+                            s.classList.add('active');
+                        } else {
+                            s.textContent = '☆';
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+                
+                // Эффект при наведении
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    starInputs.forEach((s, index) => {
+                        if (index < rating) {
+                            s.textContent = '★';
+                        } else {
+                            s.textContent = '☆';
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    const currentRating = parseInt(ratingValue.value);
+                    
+                    starInputs.forEach((s, index) => {
+                        if (index < currentRating) {
+                            s.textContent = '★';
+                        } else {
+                            s.textContent = '☆';
+                        }
+                    });
+                });
+            });
+            
+            // Отправка отзыва
+            submitReviewBtn.addEventListener('click', function() {
+                const name = document.getElementById('review-name').value.trim();
+                const rating = parseInt(ratingValue.value);
+                const text = document.getElementById('review-text').value.trim();
+                
+                // Простая валидация
+                if (!name) {
+                    alert('Пожалуйста, введите ваше имя');
+                    return;
+                }
+                
+                if (rating === 0) {
+                    alert('Пожалуйста, поставьте оценку');
+                    return;
+                }
+                
+                if (!text) {
+                    alert('Пожалуйста, напишите текст отзыва');
+                    return;
+                }
+                
+                // В реальном приложении здесь была бы отправка на сервер
+                // Создаем новый отзыв
+                const newReview = document.createElement('div');
+                newReview.className = 'review';
+                
+                const today = new Date();
+                const dateStr = today.toLocaleDateString('ru-RU') + ' в ' + 
+                               today.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'});
+                
+                let starsHtml = '';
+                for (let i = 0; i < 5; i++) {
+                    starsHtml += i < rating ? '★' : '☆';
+                }
+                
+                newReview.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-author">${name}</div>
+                        <div class="review-date">${dateStr}</div>
+                    </div>
+                    <div class="stars">${starsHtml}</div>
+                    <div class="review-text">
+                        <p>${text}</p>
+                    </div>
+                `;
+                
+                // Вставляем новый отзыв перед кнопкой
+                const reviewsContainer = document.querySelector('.reviews-section');
+                const addReviewContainer = document.querySelector('.add-review-btn-container');
+                reviewsContainer.insertBefore(newReview, addReviewContainer);
+                
+                // Обновляем средний рейтинг
+                updateAverageRating();
+                
+                // Скрываем форму и показываем кнопку
+                reviewForm.classList.remove('active');
+                addReviewBtn.style.display = 'inline-block';
+                
+                // Сбрасываем форму
+                resetForm();
+                
+                // Показываем сообщение об успехе
+                alert('Спасибо за ваш отзыв! Он появится на странице после проверки.');
+                
+                // Прокручиваем к новому отзыву
+                newReview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+            
+            // Функция сброса формы
+            function resetForm() {
+                document.getElementById('review-name').value = '';
+                document.getElementById('review-text').value = '';
+                ratingValue.value = 0;
+                
+                starInputs.forEach(star => {
+                    star.textContent = '☆';
+                    star.classList.remove('active');
+                });
+            }
+            
+            // Функция обновления среднего рейтинга (в демо-версии)
+            function updateAverageRating() {
+                // В реальном приложении это считалось бы на сервере
+                console.log('Рейтинг обновлен');
+            }
+            
+            // Обновляем счетчик корзины
+            function updateCartCounter() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                const counter = document.getElementById('cart-counter');
+                
+                if (counter && totalItems > 0) {
+                    counter.textContent = totalItems;
+                    counter.style.display = 'inline';
+                } else if (counter) {
+                    counter.style.display = 'none';
+                }
+            }
+            
+            updateCartCounter();
+        });
+    </script>
+</body>
+</html>

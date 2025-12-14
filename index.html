@@ -1,78 +1,167 @@
 <!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset="utf-8" />
-                <title>Фуд-маркет</title>
-                <link rel="stylesheet" href="style.css">
-                <link media="print" rel="stylesheet" href="print.css">
-                <link rel="preconnect" href="https://fonts.googleapis.com">
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-            </head>
-            <!-- комментарий-->
-            <body>
-                <header class="header clearfix">
-                    <nav class="main-menu">
-                        <div><a href="index.html">Главная</a></div>
-                        <div><a href="menu.html">Меню</a></div>
-                        <div><a href="combo.html">Комбо-ланчи</a></div>
-                        <div><a href="custom-combo.html">Собрать ланч</a></div>
-                        <div>
-                            <a href="cart.html">Корзина</a>
-                            <span id="cart-counter" class="cart-counter"></span>
-                        </div>
-                        <div><a href="orders.html" class="active">Заказы</a></div>
-                        <div><a href="">Отзывы</a></div>
-                        <div><a href="auth.html">Войти</a></div>
-                    </nav>
-                </header>
-                <h1 class="name">Brunch your lunch</h1>
-                <p class="main-text"> <b>Brunch your lunch </b> предаставляет вам большый и аппетитный 
-                    выбор бизнес ланчей на любой вкус. У нас вы можете заказать доставку
-                    ваших любимых блюд для быстрого обеда, что позволяет вам не тратить время
-                    на их готовку, и позволяет вам заниматься своими делами, пока мы сделаем ваш ланч.</p>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Фуд-маркет</title>
+        <link rel="stylesheet" href="style.css">
+        <link media="print" rel="stylesheet" href="print.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <style>
+            /* Стили для кнопки */
+            .about-btn-container {
+                text-align: center;
+                margin: 40px 0;
+                padding: 30px 0;
+            }
+            
+            .about-btn {
+                display: inline-block;
+                padding: 18px 50px;
+                background: linear-gradient(135deg, #2d8ce0, #1a6fc4);
+                color: white !important;
+                text-decoration: none;
+                border-radius: 50px;
+                font-size: 1.4em;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 20px rgba(45, 140, 224, 0.3);
+                position: relative;
+                overflow: hidden;
+                letter-spacing: 1px;
+                border: none;
+                cursor: pointer;
+            }
+            
+            .about-btn:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 25px rgba(45, 140, 224, 0.4);
+                background: linear-gradient(135deg, #2d8ce0, #155fa0);
+                color: white;
+            }
+            
+            .about-btn:active {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(45, 140, 224, 0.3);
+            }
+            
+            .about-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.7s ease;
+            }
+            
+            .about-btn:hover::before {
+                left: 100%;
+            }
+            
+            .about-btn i {
+                margin-right: 12px;
+                font-size: 1.2em;
+            }
+            
+            .btn-subtitle {
+                margin-top: 15px;
+                color: #666;
+                font-size: 0.9em;
+                font-style: italic;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+                line-height: 1.5;
+            }
+            
+            @media (max-width: 600px) {
+                .about-btn {
+                    padding: 16px 40px;
+                    font-size: 1.2em;
+                }
                 
-                <p class="main-text">Один из самых популярных ланчей у наших гостей состоит из салата Цезарь,
-                картофеля по деревенски вместе с жаренной курицей, а так же белого хлеба с булочкой.</p>
-                <figure class="popular_lunch">
-                    <img src="images/popular_lunch.jpg" height="384px" width="512px" alt="Салат Цезарь, картофель по-деревенски с
-                    жаренной курицей, улитка с маком и белый хлеб.">
-                    <figcaption>Любимый ланч наших гостей</figcaption>
-                </figure>
-                <table class="table"  width="70%"> <h2>График работы</h2>
-                    <thead>
-                        <tr>
-                            <th>Понедельник</th>
-                            <th>Вторник</th>
-                            <th>Среда</th>
-                            <th>Четверг</th>
-                            <th>Пятница</th>
-                            <th>Суббота</th>
-                            <th>Воскресенье</th>
-                        </tr>
-                    </thead>
+                .about-btn-container {
+                    margin: 30px 0;
+                    padding: 20px 0;
+                }
+            }
+        </style>
+    </head>
+    <!-- комментарий-->
+    <body>
+        <header class="header clearfix">
+            <nav class="main-menu">
+                <div><a href="index.html">Главная</a></div>
+                <div><a href="menu.html">Меню</a></div>
+                <div><a href="combo.html">Комбо-ланчи</a></div>
+                <div><a href="custom-combo.html">Собрать ланч</a></div>
+                <div>
+                    <a href="cart.html">Корзина</a>
+                    <span id="cart-counter" class="cart-counter"></span>
+                </div>
+                <div><a href="orders.html" class="active">Заказы</a></div>
+                <div><a href="reviews.html">Отзывы</a></div>
+                <div><a href="auth.html">Войти</a></div>
+            </nav>
+        </header>
+        <h1 class="name">Brunch your lunch</h1>
+        <p class="main-text"> <b>Brunch your lunch </b> предаставляет вам большый и аппетитный 
+            выбор бизнес ланчей на любой вкус. У нас вы можете заказать доставку
+            ваших любимых блюд для быстрого обеда, что позволяет вам не тратить время
+            на их готовку, и позволяет вам заниматься своими делами, пока мы сделаем ваш ланч.</p>
+        
+        <p class="main-text">Один из самых популярных ланчей у наших гостей состоит из салата Цезарь,
+        картофеля по деревенски вместе с жаренной курицей, а так же белого хлеба с булочкой.</p>
+        <figure class="popular_lunch">
+            <img src="images/popular_lunch.jpg" height="384px" width="512px" alt="Салат Цезарь, картофель по-деревенски с
+            жаренной курицей, улитка с маком и белый хлеб.">
+            <figcaption>Любимый ланч наших гостей</figcaption>
+        </figure>
+        <table class="table"  width="70%"> <h2>График работы</h2>
+            <thead>
+                <tr>
+                    <th>Понедельник</th>
+                    <th>Вторник</th>
+                    <th>Среда</th>
+                    <th>Четверг</th>
+                    <th>Пятница</th>
+                    <th>Суббота</th>
+                    <th>Воскресенье</th>
+                </tr>
+            </thead>
 
-                    <tbody text-align="center">
-                        <tr>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>9:00 - 21:00</td>
-                            <td>10:00 - 18:00</td>
-                            <td>Выходной</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <tbody text-align="center">
+                <tr>
+                    <td>9:00 - 21:00</td>
+                    <td>9:00 - 21:00</td>
+                    <td>9:00 - 21:00</td>
+                    <td>9:00 - 21:00</td>
+                    <td>9:00 - 21:00</td>
+                    <td>10:00 - 18:00</td>
+                    <td>Выходной</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <!-- Кнопка перехода на лендинг -->
+        <div class="about-btn-container">
+            <a href="about.html" class="about-btn">
+                <i>✨</i> Узнать больше о нас
+            </a>
+            <p class="btn-subtitle">Познакомьтесь с нашей компанией, преимуществами и узнайте, почему мы — лучший выбор для вашего бизнес-ланча</p>
+        </div>
 
-                <footer class="footer">
-                    <p style="margin: 0;"><a href="" title="Находится в разработке">  Политиика конфиденциальности</a>
-                    <a href="" title="Будут сделаны(наверное)"> Cookies</a>
-                    <a href="feedback.html" title="Напиши нам"> Обратная связь</a></p>
-                    Контактная информация: 
-                    Телефон: +7(000)000-00-00;
-                    Почта: food_market_for_you@mail.ru
-                </footer>
-                <script src="cart.js"></script>
-            </body>
-        <html>
+        <footer class="footer">
+            <p style="margin: 0;"><a href="" title="Находится в разработке">  Политиика конфиденциальности</a>
+            <a href="" title="Будут сделаны(наверное)"> Cookies</a>
+            <a href="feedback.html" title="Напиши нам"> Обратная связь</a></p>
+            Контактная информация: 
+            Телефон: +7(000)000-00-00;
+            Почта: food_market_for_you@mail.ru
+        </footer>
+        <script src="cart.js"></script>
+    </body>
+</html>
